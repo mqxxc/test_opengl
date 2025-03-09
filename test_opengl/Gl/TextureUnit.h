@@ -1,9 +1,9 @@
-#pragma once
+﻿#pragma once
 #include "pch.h"
 #include "glad/glad.h"
 
 #include <string>
-
+//纹理单元
 class TextureUnit
 {
 public:

@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Header\glad.c" />
     <ClCompile Include="Source\GlProgram.cpp" />
     <ClCompile Include="Source\GlWindow.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="Source\TextureUnit.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header\Application.h" />
     <ClInclude Include="Gl\GlProgram.h" />
     <ClInclude Include="Header\stb_image.h" />
     <ClInclude Include="Test\Test_Texture.h" />

@@ -54,6 +54,9 @@
     <ClCompile Include="Source\TextureUnit.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Application.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Wnd\GlWindow.h">
@@ -81,6 +84,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Gl\TextureUnit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\Application.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

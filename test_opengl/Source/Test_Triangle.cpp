@@ -1,6 +1,7 @@
-#include "Test_Triangle.h"
+﻿#include "Test_Triangle.h"
 #include "GlWindow.h"
 #include "GlProgram.h"
+#include "Application.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -9,14 +10,9 @@
 
 void Test_Triangle()
 {
-	GlWindow::InitGLFWwindow(3, 3);
+	Application app;
 	GlWindow* wnd = new GlWindow("LearnOpenGL", 800, 600);
 	wnd->MakeContextCurrent();
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		std::cout << "Failed to initialize GLAD" << std::endl;
-		return ;
-	}
 
 	GlProgram* program = new GlProgram;
 	program->CreateVertexShaderFromFile("src/shader/Triangle.vs");
@@ -57,13 +53,14 @@ void Test_Triangle()
 
 	glUseProgram(program->ProgramID());
 
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	std::function<void()> fun = [&]() {
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 	};
 
-	wnd->Exec(fun);
+	wnd->SetPrint(fun);
+	app.Exec();
 
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
@@ -71,6 +68,4 @@ void Test_Triangle()
 	
 	delete program;
 	delete wnd;
-
-	GlWindow::TerminateGLF();
 }

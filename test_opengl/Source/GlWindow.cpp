@@ -1,4 +1,5 @@
-#include "GlWindow.h"
+﻿#include "GlWindow.h"
+#include "Application.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -12,48 +13,34 @@ GlWindow::GlWindow(const std::string& strTitle, int nWidth, int nHeight)
 	if (m_pWnd == NULL)
 	{
 		std::cout << "create wnd error";
+		return;
 	}
 	m_mapping[m_pWnd] = this;
+	App->m_Wnds.push_back(this);
 
-	glfwSetFramebufferSizeCallback(m_pWnd, GlWindow::OnWindoSizeChange_g);
+	glfwSetFramebufferSizeCallback(m_pWnd, GlWindow::OnWndSizeChange_g);
 	glfwSetKeyCallback(m_pWnd, GlWindow::OnProcessInput_g);
+	glfwSetWindowCloseCallback(m_pWnd, GlWindow::OnWndClose_g);
 }
 
 GlWindow::~GlWindow()
 {
+	App->OnWndClose(this);
 	glfwDestroyWindow(m_pWnd);
 }
 
 void GlWindow::MakeContextCurrent()
 {
 	glfwMakeContextCurrent(m_pWnd);
+	App->InitOPenGL();
 }
 
-void GlWindow::Exec(std::function<void()> fun)
+void GlWindow::SetPrint(std::function<void()> fun)
 {
-	while (!glfwWindowShouldClose(m_pWnd))
-	{
-		glfwSwapBuffers(m_pWnd);
-		glfwPollEvents();
-
-		fun();
-	}
+	m_funPrint = fun;
 }
 
-void GlWindow::InitGLFWwindow(int nVersionMajor, int nVersionMinor)
-{
-	glfwInit();
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, nVersionMajor);	//指定大版本号
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, nVersionMinor);	//指定小版本号
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);	//指定opengl模式为核心模式
-}
-
-void GlWindow::TerminateGLF()
-{
-	glfwTerminate();
-}
-
-void GlWindow::OnWindoSizeChange(int nWidth, int nHeight)
+void GlWindow::OnWndSizeChange(int nWidth, int nHeight)
 {
 	glViewport(0, 0, nWidth, nHeight);
 }
@@ -62,11 +49,22 @@ void GlWindow::OnProcessInput(int key, int scancode, int action, int mods)
 {
 }
 
-void GlWindow::OnWindoSizeChange_g(GLFWwindow* wnd, int nWidth, int nHeight)
+void GlWindow::OnPrint()
+{
+	glfwSwapBuffers(m_pWnd);
+	m_funPrint();
+}
+
+void GlWindow::OnWndClose()
+{
+	App->OnWndClose(this);
+}
+
+void GlWindow::OnWndSizeChange_g(GLFWwindow* wnd, int nWidth, int nHeight)
 {
 	if (m_mapping.find(wnd) != m_mapping.end())
 	{
-		m_mapping[wnd]->OnWindoSizeChange(nWidth, nHeight);
+		m_mapping[wnd]->OnWndSizeChange(nWidth, nHeight);
 	}
 }
 
@@ -78,6 +76,12 @@ void GlWindow::OnProcessInput_g(GLFWwindow* wnd, int key, int scancode, int acti
 	}
 }
 
-
+void GlWindow::OnWndClose_g(GLFWwindow* wnd)
+{
+	if (m_mapping.find(wnd) != m_mapping.end())
+	{
+		m_mapping[wnd]->OnWndClose();
+	}
+}
 
 std::map<GLFWwindow*, GlWindow*> GlWindow::m_mapping;

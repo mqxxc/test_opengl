@@ -1,7 +1,8 @@
-#include "Test_Texture.h"
+﻿#include "Test_Texture.h"
 #include "GlWindow.h"
 #include "GlProgram.h"
 #include "TextureUnit.h"
+#include "Application.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -10,14 +11,9 @@
 
 void Test::Preliminary_Texture()
 {
-	GlWindow::InitGLFWwindow(3, 3);
+	Application app;
 	GlWindow* wnd = new GlWindow("LearnOpenGL", 800, 600);
 	wnd->MakeContextCurrent();
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		std::cout << "Failed to initialize GLAD" << std::endl;
-		return;
-	}
 
 	GlProgram* program = new GlProgram;
 	program->CreateVertexShaderFromFile("src/shader/Preliminary_Texture.vs");
@@ -82,13 +78,14 @@ void Test::Preliminary_Texture()
 	program->SetTextureUnit(&texture1, "Texture1");
 	program->SetTextureUnit(&texture2, "Texture2");
 
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	std::function<void()> fun = [&]() {
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	};
 
-	wnd->Exec(fun);
+	wnd->SetPrint(fun);
+	app.Exec();
 
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
@@ -96,6 +93,4 @@ void Test::Preliminary_Texture()
 
 	delete program;
 	delete wnd;
-
-	GlWindow::TerminateGLF();
 }
