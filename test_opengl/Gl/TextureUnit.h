@@ -24,7 +24,7 @@ public:
 	TextureUnit(uint nGlTexture);
 	~TextureUnit();
 
-	bool LoadImg(const std::string& imgPath);
+	bool LoadImg(const std::string& imgPath, bool reverseY = false);
 	void SetRowAround(Around around);
 	void SetColumnAround(Around around);
 	void SetAmplifyStrategy(Zoom zoom);

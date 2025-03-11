@@ -70,7 +70,7 @@ void Test::Preliminary_Texture()
 	texture2.SetColumnAround(TextureUnit::eREPEAT);
 	texture2.SetAmplifyStrategy(TextureUnit::eNEAREST);
 	texture2.SetShrinkStrategy(TextureUnit::eNEAREST);
-	texture2.LoadImg("src/img/awesomeface.png");
+	texture2.LoadImg("src/img/awesomeface.png" , true);
 	texture2.CreateGenerateMipmap();
 
 	glUseProgram(program->ProgramID());

@@ -40,6 +40,20 @@ void GlWindow::SetPrint(std::function<void()> fun)
 	m_funPrint = fun;
 }
 
+int GlWindow::Height()
+{
+	int width, height;
+	glfwGetWindowSize(m_pWnd, &width, &height);
+	return height;
+}
+
+int GlWindow::Width()
+{
+	int width, height;
+	glfwGetWindowSize(m_pWnd, &width, &height);
+	return width;
+}
+
 void GlWindow::OnWndSizeChange(int nWidth, int nHeight)
 {
 	glViewport(0, 0, nWidth, nHeight);

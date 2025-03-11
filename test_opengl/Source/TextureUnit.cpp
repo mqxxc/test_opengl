@@ -1,4 +1,4 @@
-#include "TextureUnit.h"
+﻿#include "TextureUnit.h"
 
 #include "glad/glad.h"
 #include "stb_image.h"
@@ -16,7 +16,7 @@ TextureUnit::~TextureUnit()
 	glDeleteTextures(1, &m_nTextureID);
 }
 
-bool TextureUnit::LoadImg(const std::string& imgPath)
+bool TextureUnit::LoadImg(const std::string& imgPath, bool reverseY)
 {
 	if (m_gTextureID != m_nTextureID)
 	{
@@ -26,6 +26,7 @@ bool TextureUnit::LoadImg(const std::string& imgPath)
 	}
 
 	int width, height, nrChannels;
+	stbi_set_flip_vertically_on_load(reverseY);
 	unsigned char* data = stbi_load(imgPath.c_str(), &width, &height, &nrChannels, 4);
 	if (data)
 	{

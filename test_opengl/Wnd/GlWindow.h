@@ -12,6 +12,8 @@ public:
 	virtual ~GlWindow();
 	void MakeContextCurrent();			//绑定当前窗口为gl上下文
 	void SetPrint(std::function<void()>fun);	//开启事件循环
+	int Height();
+	int Width();
 
 protected:
 	friend class Application;
