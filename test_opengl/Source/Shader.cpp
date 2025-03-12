@@ -48,19 +48,61 @@ bool Shader::CheckError()
 
 short Shader::LoadFromFile(const std::vector<std::string>& strPath)
 {
+    m_bValid = false;
+
     if (m_nShaderID == -1)
     {
         return -1;
     }
 
     int nCount = strPath.size();
+    std::vector<std::string> datas(nCount, "");
+    for (int i = 0; i < nCount; ++i)
+    {
+        std::ifstream file;
+        file.open(strPath[i], std::ios::in);
+        if (!file.is_open())
+        {
+            return -3;
+        }
+        std::string value;
+        std::string buff;
+        while (std::getline(file, buff))
+        {
+            if (buff.find("$") == -1)
+            {
+                datas[i].append(buff);
+                datas[i].append("\n");
+            }
+            datas[i].append("\0");
+        }
+        file.close();
+    }
 
+    const char** shaderParts = new const char* [nCount];
+    for (int i = 0; i < nCount; ++i)
+    {
+        shaderParts[i] = datas[i].c_str();
+    }
+
+    glShaderSource(m_nShaderID, nCount, shaderParts, nullptr);
+    glCompileShader(m_nShaderID);
+
+    delete[] shaderParts;
+
+    if (CheckError())
+    {
+        m_bValid = true;
+        return 0;
+    }
 
     return -2;
 }
 
 short Shader::LoadFromFile(const std::string& strPath)
 {
+    m_bValid = false;
+
     if (m_nShaderID == -1)
     {
         return -1;

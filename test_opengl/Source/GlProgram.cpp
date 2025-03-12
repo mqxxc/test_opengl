@@ -12,6 +12,8 @@ GlProgram::GlProgram()
 
 GlProgram::~GlProgram()
 {
+	ClearShader();
+
 	glDeleteProgram(m_nProgramID);
 }
 
@@ -24,7 +26,7 @@ void GlProgram::CreateVertexShader(const std::vector<std::string>& Source)
 	}
 	else
 	{
-		m_listShader.push_back(pShader);
+		m_listShader[0] = pShader;
 	}
 }
 
@@ -37,7 +39,7 @@ void GlProgram::CreateVertexShader(const std::string& Source)
 	}
 	else
 	{
-		m_listShader.push_back(pShader);
+		m_listShader[0] = pShader;
 	}
 }
 
@@ -50,12 +52,21 @@ void GlProgram::CreateVertexShaderFromFile(const std::string& strFile)
 	}
 	else
 	{
-		m_listShader.push_back(pShader);
+		m_listShader[0] = pShader;
 	}
 }
 
 void GlProgram::CreateVertexShaderFromFile(const std::vector<std::string>& strFile)
 {
+	Shader* pShader = Shader::CreateVertexShader();
+	if (pShader->LoadFromFile(strFile) != 0)
+	{
+		std::cout << "VertexShader create error" << std::endl;
+	}
+	else
+	{
+		m_listShader[0] = pShader;
+	}
 }
 
 void GlProgram::CreateFragmentShader(const std::vector<std::string>& Source)
@@ -67,7 +78,7 @@ void GlProgram::CreateFragmentShader(const std::vector<std::string>& Source)
 	}
 	else
 	{
-		m_listShader.push_back(pShader);
+		m_listShader[1] = pShader;
 	}
 }
 
@@ -80,7 +91,7 @@ void GlProgram::CreateFragmentShader(const std::string& Source)
 	}
 	else
 	{
-		m_listShader.push_back(pShader);
+		m_listShader[1] = pShader;
 	}
 }
 
@@ -93,12 +104,21 @@ void GlProgram::CreateFragmentShaderFromFile(const std::string& strFile)
 	}
 	else
 	{
-		m_listShader.push_back(pShader);
+		m_listShader[1] = pShader;
 	}
 }
 
 void GlProgram::CreateFragmentShaderFromFile(const std::vector<std::string>& strFile)
 {
+	Shader* pShader = Shader::CreateFragmentShader();
+	if (pShader->LoadFromFile(strFile) != 0)
+	{
+		std::cout << "FragmentShader create error" << std::endl;
+	}
+	else
+	{
+		m_listShader[1] = pShader;
+	}
 }
 
 bool GlProgram::Complete()
@@ -114,11 +134,7 @@ bool GlProgram::Complete()
 	}
 	glLinkProgram(m_nProgramID);
 
-	for (auto it : m_listShader)
-	{
-		delete it;
-	}
-	m_listShader.clear();
+	ClearShader();
 
 	return true;
 }
@@ -128,7 +144,81 @@ void GlProgram::SetTextureUnit(TextureUnit* tex, const std::string& varName)
 	glUniform1i(glGetUniformLocation(m_nProgramID, varName.c_str()), tex->m_nGlTextureNum - GL_TEXTURE0);
 }
 
+void GlProgram::SetUniform(const std::string& name, bool value) const
+{
+	glUniform1i(glGetUniformLocation(m_nProgramID, name.c_str()), (int)value);
+}
+
+void GlProgram::SetUniform(const std::string& name, int value) const
+{
+	glUniform1i(glGetUniformLocation(m_nProgramID, name.c_str()), value);
+}
+
+void GlProgram::SetUniform(const std::string& name, float value) const
+{
+	glUniform1f(glGetUniformLocation(m_nProgramID, name.c_str()), value);
+}
+
+void GlProgram::SetUniform(const std::string& name, const glm::vec2& value) const
+{
+	glUniform2fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, &value[0]);
+}
+
+void GlProgram::SetUniform(const std::string& name, float x, float y) const
+{
+	glUniform2f(glGetUniformLocation(m_nProgramID, name.c_str()), x, y);
+}
+
+void GlProgram::SetUniform(const std::string& name, const glm::vec3& value) const
+{
+	glUniform3fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, &value[0]);
+}
+
+void GlProgram::SetUniform(const std::string& name, float x, float y, float z) const
+{
+	glUniform3f(glGetUniformLocation(m_nProgramID, name.c_str()), x, y, z);
+}
+
+void GlProgram::SetUniform(const std::string& name, const glm::vec4& value) const
+{
+	glUniform4fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, &value[0]);
+}
+
+void GlProgram::SetUniform(const std::string& name, float x, float y, float z, float w) const
+{
+	glUniform4f(glGetUniformLocation(m_nProgramID, name.c_str()), x, y, z, w);
+}
+
+void GlProgram::SetUniform(const std::string& name, const glm::mat2& mat) const
+{
+	glUniformMatrix2fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}
+
+void GlProgram::SetUniform(const std::string& name, const glm::mat3& mat) const
+{
+	glUniformMatrix3fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}
+
+void GlProgram::SetUniform(const std::string& name, const glm::mat4& mat) const
+{
+	glUniformMatrix4fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}
+
+void GlProgram::Use()
+{
+	glUseProgram(m_nProgramID);
+}
+
 uint GlProgram::ProgramID()
 {
 	return m_nProgramID;
+}
+
+void GlProgram::ClearShader()
+{
+	for (int i = 0; i < 2; ++i)
+	{
+		delete m_listShader[i];
+		m_listShader[i] = nullptr;
+	}
 }
