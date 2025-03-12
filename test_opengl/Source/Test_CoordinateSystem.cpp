@@ -1,4 +1,4 @@
-#include "Test_CoordinateSystem.h"
+﻿#include "Test_CoordinateSystem.h"
 #include "GlWindow.h"
 #include "GlProgram.h"
 #include "TextureUnit.h"
@@ -111,6 +111,7 @@ void Test::CoordinateSystem()
 	glm::mat4 projection;
 	projection = glm::perspective(glm::radians(45.0f), wnd->Width() / (float)wnd->Height(), 0.1f, 100.0f);
 
+	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	std::function<void()> fun = [&]() {
 		//传入模型矩阵
@@ -123,7 +124,7 @@ void Test::CoordinateSystem()
 		//传入投影矩阵
 		program->SetUniform("projection", projection);
 
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	};
