@@ -164,6 +164,7 @@
     <ClCompile Include="Source\Test_wnd.cpp" />
     <ClCompile Include="Source\Test_Texture.cpp" />
     <ClCompile Include="Source\TextureUnit.cpp" />
+    <ClCompile Include="Source\Test_Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header\Application.h" />
@@ -460,6 +461,7 @@
     <ClInclude Include="Test\Test_CoordinateSystem.h" />
     <ClInclude Include="Test\Test_Texture.h" />
     <ClInclude Include="Gl\TextureUnit.h" />
+    <ClInclude Include="Test\Test_Camera.h" />
     <ClInclude Include="Wnd\GlWindow.h" />
     <ClInclude Include="Header\pch.h" />
     <ClInclude Include="Gl\Shader.h" />

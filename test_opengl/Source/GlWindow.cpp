@@ -21,6 +21,7 @@ GlWindow::GlWindow(const std::string& strTitle, int nWidth, int nHeight)
 	glfwSetFramebufferSizeCallback(m_pWnd, GlWindow::OnWndSizeChange_g);
 	glfwSetKeyCallback(m_pWnd, GlWindow::OnProcessInput_g);
 	glfwSetWindowCloseCallback(m_pWnd, GlWindow::OnWndClose_g);
+	glfwSetCursorPosCallback(m_pWnd, GlWindow::OnMouseMove_g);
 }
 
 GlWindow::~GlWindow()
@@ -40,6 +41,21 @@ void GlWindow::SetPrint(std::function<void()> fun)
 	m_funPrint = fun;
 }
 
+void GlWindow::SetKeyEnter(std::function<void(int, int, int, int)> fun)
+{
+	m_funKeyEnter = fun;
+}
+
+void GlWindow::SetMouseMove(std::function<void(double, double)> fun)
+{
+	m_funMoudeMove = fun;
+}
+
+void GlWindow::SetInputMode(int mode, int value)
+{
+	glfwSetInputMode(m_pWnd, mode, value);
+}
+
 int GlWindow::Height()
 {
 	int width, height;
@@ -54,6 +70,11 @@ int GlWindow::Width()
 	return width;
 }
 
+void GlWindow::Close()
+{
+	OnWndClose();
+}
+
 void GlWindow::OnWndSizeChange(int nWidth, int nHeight)
 {
 	glViewport(0, 0, nWidth, nHeight);
@@ -61,17 +82,32 @@ void GlWindow::OnWndSizeChange(int nWidth, int nHeight)
 
 void GlWindow::OnProcessInput(int key, int scancode, int action, int mods)
 {
+	if(m_funKeyEnter != nullptr)
+	{
+		m_funKeyEnter(key, scancode, action, mods);
+	}
 }
 
 void GlWindow::OnPrint()
 {
 	glfwSwapBuffers(m_pWnd);
-	m_funPrint();
+	if (m_funPrint != nullptr)
+	{
+		m_funPrint();
+	}
 }
 
 void GlWindow::OnWndClose()
 {
 	App->OnWndClose(this);
+}
+
+void GlWindow::OnMouseMove(double xpos, double ypos)
+{
+	if (m_funMoudeMove != nullptr)
+	{
+		m_funMoudeMove(xpos, ypos);
+	}
 }
 
 void GlWindow::OnWndSizeChange_g(GLFWwindow* wnd, int nWidth, int nHeight)
@@ -95,6 +131,14 @@ void GlWindow::OnWndClose_g(GLFWwindow* wnd)
 	if (m_mapping.find(wnd) != m_mapping.end())
 	{
 		m_mapping[wnd]->OnWndClose();
+	}
+}
+
+void GlWindow::OnMouseMove_g(GLFWwindow* wnd, double xpos, double ypos)
+{
+	if (m_mapping.find(wnd) != m_mapping.end())
+	{
+		m_mapping[wnd]->OnMouseMove(xpos, ypos);
 	}
 }
 
