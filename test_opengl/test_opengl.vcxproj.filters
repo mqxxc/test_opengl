@@ -66,6 +66,9 @@
     <ClCompile Include="Source\Test_Camera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Wnd\GlWindow.h">
@@ -966,6 +969,28 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Test\Test_Camera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Gl\Camera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Matrix.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Matrix.ipp" />
+    <ClInclude Include="Source\Tool.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vec.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Vec.ipp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Math.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Math.ipp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

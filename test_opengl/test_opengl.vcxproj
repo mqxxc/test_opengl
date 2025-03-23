@@ -122,7 +122,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\sdk\glfw\include;..\sdk\glad\include;Gl;Wnd;Test;Header;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\sdk\glfw\include;..\sdk\glad\include;Gl;Wnd;Test;Header;math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Header\glm\detail\glm.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Header\glad.c" />
@@ -167,6 +168,7 @@
     <ClCompile Include="Source\Test_Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Gl\Camera.h" />
     <ClInclude Include="Header\Application.h" />
     <ClInclude Include="Gl\GlProgram.h" />
     <ClInclude Include="Header\glm\common.hpp" />
@@ -458,6 +460,12 @@
     <ClInclude Include="Header\glm\vec4.hpp" />
     <ClInclude Include="Header\glm\vector_relational.hpp" />
     <ClInclude Include="Header\stb_image.h" />
+    <ClInclude Include="math\Math.hpp" />
+    <ClInclude Include="math\Matrix.hpp" />
+    <ClInclude Include="math\Vec.hpp" />
+    <ClInclude Include="Source\Math.ipp" />
+    <ClInclude Include="Source\Tool.hpp" />
+    <ClInclude Include="Source\Vec.ipp" />
     <ClInclude Include="Test\Test_CoordinateSystem.h" />
     <ClInclude Include="Test\Test_Texture.h" />
     <ClInclude Include="Gl\TextureUnit.h" />
@@ -607,6 +615,7 @@
     <None Include="Header\glm\gtx\vector_angle.inl" />
     <None Include="Header\glm\gtx\vector_query.inl" />
     <None Include="Header\glm\gtx\wrap.inl" />
+    <ClInclude Include="Source\Matrix.ipp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
