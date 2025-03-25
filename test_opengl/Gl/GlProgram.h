@@ -4,7 +4,8 @@
 #include <vector>
 #include <list>
 #include <string>
-#include "glm/glm.hpp"
+#include "Matrix.hpp"
+#include "Vec.hpp"
 
 //gl渲染程序
 class Shader;
@@ -32,16 +33,17 @@ public:
 
 	void SetUniform(const std::string& name, bool value) const;
 	void SetUniform(const std::string& name, int value) const;
-    void SetUniform(const std::string& name, float value) const;
-    void SetUniform(const std::string& name, const glm::vec2& value) const;
-    void SetUniform(const std::string& name, float x, float y) const;
-    void SetUniform(const std::string& name, const glm::vec3& value) const;
-    void SetUniform(const std::string& name, float x, float y, float z) const;
-    void SetUniform(const std::string& name, const glm::vec4& value) const;
-    void SetUniform(const std::string& name, float x, float y, float z, float w) const;
-    void SetUniform(const std::string& name, const glm::mat2& mat) const;
-    void SetUniform(const std::string& name, const glm::mat3& mat) const;
-    void SetUniform(const std::string& name, const glm::mat4& mat) const;
+	void SetUniform(const std::string& name, float value) const;
+	
+	void SetUniform(const std::string& name, float x, float y) const;
+	void SetUniform(const std::string& name, float x, float y, float z) const;
+	void SetUniform(const std::string& name, float x, float y, float z, float w) const;
+	void SetUniform(const std::string& name, const YQ::Vec<float, 2>& value) const;
+	void SetUniform(const std::string& name, const YQ::Vec<float, 3>& value) const;
+	void SetUniform(const std::string& name, const YQ::Vec<float, 4>& value) const;
+	void SetUniform(const std::string& name, const YQ::Matrix<float, 2, 2>& value) const;
+	void SetUniform(const std::string& name, const YQ::Matrix<float, 3, 3>& value) const;
+	void SetUniform(const std::string& name, const YQ::Matrix<float, 4, 4>& value) const;
 
 private:
 	uint m_nProgramID = -1;

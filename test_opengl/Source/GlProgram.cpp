@@ -1,9 +1,10 @@
+#include <iostream>
+
 #include "GlProgram.h"
 #include "Shader.h"
 #include "TextureUnit.h"
 
 #include "glad/glad.h"
-#include <iostream>
 
 GlProgram::GlProgram()
 {
@@ -141,7 +142,7 @@ bool GlProgram::Complete()
 
 void GlProgram::SetTextureUnit(TextureUnit* tex, const std::string& varName)
 {
-	glUniform1i(glGetUniformLocation(m_nProgramID, varName.c_str()), tex->m_nGlTextureNum - GL_TEXTURE0);
+	glUniform1i(glGetUniformLocation(m_nProgramID, varName.c_str()), tex->m_nGlTextureNum - GL_TEXTURE0);	
 }
 
 void GlProgram::SetUniform(const std::string& name, bool value) const
@@ -159,19 +160,9 @@ void GlProgram::SetUniform(const std::string& name, float value) const
 	glUniform1f(glGetUniformLocation(m_nProgramID, name.c_str()), value);
 }
 
-void GlProgram::SetUniform(const std::string& name, const glm::vec2& value) const
-{
-	glUniform2fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, &value[0]);
-}
-
 void GlProgram::SetUniform(const std::string& name, float x, float y) const
 {
 	glUniform2f(glGetUniformLocation(m_nProgramID, name.c_str()), x, y);
-}
-
-void GlProgram::SetUniform(const std::string& name, const glm::vec3& value) const
-{
-	glUniform3fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, &value[0]);
 }
 
 void GlProgram::SetUniform(const std::string& name, float x, float y, float z) const
@@ -179,29 +170,39 @@ void GlProgram::SetUniform(const std::string& name, float x, float y, float z) c
 	glUniform3f(glGetUniformLocation(m_nProgramID, name.c_str()), x, y, z);
 }
 
-void GlProgram::SetUniform(const std::string& name, const glm::vec4& value) const
-{
-	glUniform4fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, &value[0]);
-}
-
 void GlProgram::SetUniform(const std::string& name, float x, float y, float z, float w) const
 {
 	glUniform4f(glGetUniformLocation(m_nProgramID, name.c_str()), x, y, z, w);
 }
 
-void GlProgram::SetUniform(const std::string& name, const glm::mat2& mat) const
+void GlProgram::SetUniform(const std::string& name, const YQ::Vec<float, 2>& value) const
 {
-	glUniformMatrix2fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+	glUniform2fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, value.Data());
 }
 
-void GlProgram::SetUniform(const std::string& name, const glm::mat3& mat) const
+void GlProgram::SetUniform(const std::string& name, const YQ::Vec<float, 3>& value) const
 {
-	glUniformMatrix3fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+	glUniform3fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, value.Data());
 }
 
-void GlProgram::SetUniform(const std::string& name, const glm::mat4& mat) const
+void GlProgram::SetUniform(const std::string& name, const YQ::Vec<float, 4>& value) const
 {
-	glUniformMatrix4fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+	glUniform4fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, value.Data());
+}
+
+void GlProgram::SetUniform(const std::string& name, const YQ::Matrix<float, 2, 2>& value) const
+{
+	glUniformMatrix2fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, GL_FALSE, value.Data());
+}
+
+void GlProgram::SetUniform(const std::string& name, const YQ::Matrix<float, 3, 3>& value) const
+{
+	glUniformMatrix3fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, GL_FALSE, value.Data());
+}
+
+void GlProgram::SetUniform(const std::string& name, const YQ::Matrix<float, 4, 4>& value) const
+{
+	glUniformMatrix4fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, GL_FALSE, value.Data());
 }
 
 void GlProgram::Use()

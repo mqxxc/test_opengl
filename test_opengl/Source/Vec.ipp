@@ -2,162 +2,237 @@
 #include "Vec.hpp"
 #include <assert.h>
 
-template<class T>
-YQ::Vec<T>::Vec()
+namespace YQ
 {
-	m_nSize = 0;
-}
-
-template<class T>
-template<typename ...Args>
-YQ::Vec<T>::Vec(Args & ...args)
-{
-	Resize(sizeof...(args));
-	int i = 0;
-	((m_data[i++] = std::forward<Args>(args)), ...);
-}
-
-template<class T>
-YQ::Vec<T>::Vec(int size)
-{
-	Resize(size);
-}
-
-template<class T>
-YQ::Vec<T>::Vec(const Vec& other)
-{
-	Resize(other.m_nSize);
-
-	for (int i = 0; i < m_nSize; ++i)
+	template<typename T, int nSize>
+	Vec<T, nSize>::Vec()
 	{
-		m_data[i] = other.m_data[i];
-	}
-}
-
-template<class T>
-YQ::Vec<T>::Vec(Vec&& other)
-{
-	Destroy();
-	m_data = other.m_datal;
-	m_nSize = other.m_nSize;
-
-	other.m_datal = nullptr;
-	other.m_nSize = 0;
-}
-
-template<class T>
-YQ::Vec<T>::~Vec()
-{
-	Destroy();
-}
-
-template<class T>
-void YQ::Vec<T>::Resize(int size)
-{
-	if (size <= 0)
-	{
-		return;
+		m_nSize = nSize;
+		if (m_nSize > 0)
+		{
+			m_data = new T[m_nSize];
+		}
 	}
 
-	Destroy();
-
-	m_nSize = size;
-
-	m_data = new T[size];
-}
-
-template<class T>
-int YQ::Vec<T>::Size() const
-{
-	return m_nSize;
-}
-
-template<class T>
-bool YQ::Vec<T>::IsEmpty() const
-{
-	return m_nSize == 0;
-}
-
-template<class T>
-const T& YQ::Vec<T>::At(int nIndex) const
-{
-	if (m_data == nullptr || nIndex < 0 || nIndex >= m_nSize)
+	template<typename T, int nSize>
+	template<typename ...Args>
+	Vec<T, nSize>::Vec(Args && ...args)
+		: Vec()
 	{
-		return T();
+		int i = 0;
+		((m_data[i++] = std::forward<Args>(args)), ...);
 	}
 
-	return m_data[nIndex];
-}
-
-template<class T>
-bool YQ::Vec<T>::SetValue(int nIndex, const T& value)
-{
-	if (m_data == nullptr || nIndex < 0 || nIndex >= m_nSize)
+	template<typename T, int nSize>
+	Vec<T, nSize>::Vec(const T& defValue)
+		: Vec()
 	{
-		return false;
+		for (int i = 0; i < m_nSize; ++i)
+		{
+			m_data[i] = defValue;
+		}
 	}
 
-	m_data[nIndex] = value;
-	return true;
-}
-
-template<class T>
-void YQ::Vec<T>::Clear()
-{
-	for (int i = 0; i < m_nSize; ++i)
+	template<typename T, int nSize>
+	Vec<T, nSize>::Vec(const Vec& other)
+		: Vec()
 	{
-		m_data[i] = T();
-	}
-}
-
-template<class T>
-void YQ::Vec<T>::Destroy()
-{
-	if (m_data != nullptr)
-	{
-		delete m_data;
-		m_data = nullptr;
+		for (int i = 0; i < m_nSize; ++i)
+		{
+			m_data[i] = other.m_data[i];
+		}
 	}
 
-	m_nSize = 0;
-}
-
-template<class T>
-YQ::Vec<T>& YQ::Vec<T>::Normalization()
-{
-	double length = 0;
-	for (int i = 0; i < m_nSize; ++i)
+	template<typename T, int nSize>
+	Vec<T, nSize>::Vec(Vec&& other)
 	{
-		length += m_data[i] * m_data[i];
+		Destroy();
+		m_data = other.m_data;
+		m_nSize = other.m_nSize;
+
+		other.m_data = nullptr;
+		other.m_nSize = 0;
 	}
-	assert(length != 0);
-	length = sqrt(length);
-	for (int i = 0; i < m_nSize; ++i)
+
+	template<typename T, int nSize>
+	Vec<T, nSize>::~Vec()
 	{
-		m_data[i] /= static_cast<T>(length);
+		Destroy();
 	}
-	return (*this);
-}
 
-template<class T>
-T& YQ::Vec<T>::operator[](int nIndex)
-{
-	assert(m_data != nullptr &&(nIndex > 0 && nIndex < m_nSize));
+	template<typename T, int nSize>
+	int Vec<T, nSize>::Size() const
+	{
+		return m_nSize;
+	}
 
-	return m_data[nIndex];
+	template<typename T, int nSize>
+	bool Vec<T, nSize>::IsEmpty() const
+	{
+		return m_nSize == 0;
+	}
+
+	template<typename T, int nSize>
+	const T& Vec<T, nSize>::At(int nIndex) const
+	{
+		if (m_data == nullptr || nIndex < 0 || nIndex >= m_nSize)
+		{
+			return T();
+		}
+
+		return m_data[nIndex];
+	}
+
+	template<typename T, int nSize>
+	bool Vec<T, nSize>::SetValue(int nIndex, const T& value)
+	{
+		if (m_data == nullptr || nIndex < 0 || nIndex >= m_nSize)
+		{
+			return false;
+		}
+
+		m_data[nIndex] = value;
+		return true;
+	}
+
+	template<typename T, int nSize>
+	void Vec<T, nSize>::Clear()
+	{
+		for (int i = 0; i < m_nSize; ++i)
+		{
+			m_data[i] = T();
+		}
+	}
+
+	template<typename T, int nSize>
+	void Vec<T, nSize>::Destroy()
+	{
+		if (m_data != nullptr)
+		{
+			delete m_data;
+			m_data = nullptr;
+		}
+
+		m_nSize = 0;
+	}
+
+	template<typename T, int nSize>
+	Vec<T, nSize>& Vec<T, nSize>::Normalization()
+	{
+		double length = 0;
+		for (int i = 0; i < m_nSize; ++i)
+		{
+			length += m_data[i] * m_data[i];
+		}
+
+		if (length != 0)
+		{
+			length = sqrt(length);
+			for (int i = 0; i < m_nSize; ++i)
+			{
+				m_data[i] /= static_cast<T>(length);
+			}
+		}
+		return (*this);
+	}
+
+	template<typename T, int nSize>
+	const T* const Vec<T, nSize>::Data() const
+	{
+		return m_data;
+	}
+
+	template<typename T, int nSize>
+	inline Vec<T, nSize> Vec<T, nSize>::Multiply(const T& value) const
+	{
+		Vec<T, nSize> res(*this);
+		for (int i = 0; i < m_nSize; ++i)
+		{
+			res.m_data[i] *= value;
+		}
+		return res;
+	}
+
+	template<typename T, int nSize>
+	T& Vec<T, nSize>::operator[](int nIndex)
+	{
+		assert(m_data != nullptr && (nIndex >= 0 && nIndex < m_nSize));
+
+		return m_data[nIndex];
+	}
+
+	template<typename T, int nSize>
+	inline Vec<T, nSize> Vec<T, nSize>::operator*(const Vec<T, nSize>& vec) const
+	{
+		Vec<T, nSize> temp;
+		for (int i = 0; i < temp.m_nSize; ++i)
+		{
+			temp.m_data[i] *= vec.m_data[i];
+		}
+		return temp;
+	}
+	
+	template<typename T, int nSize>
+	inline Vec<T, nSize> Vec<T, nSize>::operator+(const Vec<T, nSize>& vec) const
+	{
+		Vec<T, nSize> res;
+		for (int i = 0; i < m_nSize; ++i)
+		{
+			res[i] = m_data[i] + vec.m_data[i];
+		}
+		return res;
+	}
+
+	template<typename T, int nSize>
+	Vec<T, nSize>& Vec<T, nSize>::operator+=(const Vec<T, nSize>& vec)
+	{
+		for (int i = 0; i < m_nSize; ++i)
+		{
+			m_data[i] += vec.At(i);
+		}
+		return (*this);
+	}
+
+	template<typename T, int nSize>
+	inline Vec<T, nSize> Vec<T, nSize>::operator-(const Vec<T, nSize>& vec) const
+	{
+		Vec<T, nSize> res;
+		for (int i = 0; i < m_nSize; ++i)
+		{
+			res[i] = m_data[i] - vec.m_data[i];
+		}
+		return res;
+	}
+
+	template<typename T, int nSize>
+	Vec<T, nSize>& Vec<T, nSize>::operator-=(const Vec<T, nSize>& vec)
+	{
+		for (int i = 0; i < m_nSize; ++i)
+		{
+			m_data[i] -= vec.At(i);
+		}
+		return (*this);
+	}
+
+	template<typename T, int nSize>
+	void Vec<T, nSize>::operator=(const Vec<T, nSize>& vec)
+	{
+		for (int i = 0; i < m_nSize; ++i)
+		{
+			m_data[i] = vec.At(i);
+		}
+	}
 }
 
 #ifdef _DEBUG
 #include <iostream>
-template<class T>
-void YQ::Vec<T>::print()
+template<typename T, int nSize>
+void YQ::Vec<T, nSize>::print() const
 {
 	for (int i = 0; i < m_nSize; ++i)
 	{
 		std::cout << m_data[i] << "   ";
 	}
-	std::cout << std::endl;
+	std::cout << std::endl << std::endl;
 }
 #endif // _DEBUG
-
-

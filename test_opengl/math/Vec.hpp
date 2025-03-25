@@ -1,31 +1,38 @@
 #pragma once
 namespace YQ
 {
-	template<class T>
+	template<typename T, int nSize>
 	class Vec 
 	{
 	public:
 		Vec();
 		template<typename... Args>
-		Vec(Args&... args);
-		Vec(int size);
+		explicit Vec(Args&&... args);
+		Vec(const T& defValue);
 		Vec(const Vec& other);
 		Vec(Vec&& other);
 		virtual ~Vec();
 
-		void Resize(int size);
 		int Size() const;
 		bool IsEmpty() const;
 		const T& At(int nIndex) const;
 		bool SetValue(int nIndex, const T& value);
 		void Clear();
 		void Destroy();
-		Vec<T>& Normalization();
+		Vec<T, nSize>& Normalization();
+		const T* const Data() const;
+		Vec<T, nSize> Multiply(const T& value) const;
 
 		T& operator[](int nIndex);
+		Vec<T, nSize> operator*(const Vec<T, nSize>& vec) const;
+		Vec<T, nSize> operator+(const Vec<T, nSize>& vec) const;
+		Vec<T, nSize>& operator+=(const Vec<T, nSize>& vec);
+		Vec<T, nSize> operator-(const Vec<T, nSize>& vec) const;
+		Vec<T, nSize>& operator-=(const Vec<T, nSize>& vec);
+		void operator=(const Vec<T, nSize>& vec);
 
 #ifdef _DEBUG
-		void print();
+		void print() const;
 #endif // _DEBUG
 
 	protected:

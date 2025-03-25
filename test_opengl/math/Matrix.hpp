@@ -1,48 +1,49 @@
 #pragma once
-#include "Vec.hpp"
+
 namespace YQ
 {
-	template<class T>
+	template<typename T, int nRow, int nCol>
 	class Matrix
 	{
 	public:
 		Matrix();
-		Matrix(int row, int col, T defValue = T());
+		Matrix(T defValue);
 		Matrix(const Matrix& other);
-		Matrix(const Vec<T>& vec);
 		Matrix(Matrix&& other);
 		virtual ~Matrix();
 
 		const T& At(int row, int col) const;
 		bool SetValue(int row, int col, const T& value);
-		void Resize(int rows, int cols);
 		int Rows() const;
 		int Cols() const;
-		void Destroy();		//释放数据空间
-		void Clear();		//清理数据
+		void Destroy();		//閲婃斁鏁版嵁绌洪棿
+		void Clear();		//娓呯悊鏁版嵁
 		bool IsEmpty() const;
 		const T* const Data() const;
-		void Copy(const Matrix<T>& other);
-		
-		static Matrix<T> CreateOnce(int rows, int cols);			//创建单位矩阵
+		Matrix<T, nCol, nRow> Transposition() const;		//杞嚦鐭╅樀
 
-		bool operator ==(const Matrix<T>& other) const;
-		bool operator !=(const Matrix<T>& other) const;
-		void operator=(const Matrix<T>& other);
-		Matrix<T> operator*(const Matrix<T>& other) const;
-		Matrix<T>& operator*=(const Matrix<T>& other);
-		Matrix<T> operator*(const T&) const;
-		Matrix<T>& operator*=(const T&);
-		Matrix<T> operator+(const Matrix<T>& other) const;
-		Matrix<T>& operator+=(const Matrix<T>& other);
-		Matrix<T> operator-(const Matrix<T>& other) const;
-		Matrix<T>& operator-=(const Matrix<T>& other);
+		template<int otherRow, int otherCol>
+		void Copy(const Matrix<T, otherRow, otherCol>& other);
+
+		static Matrix<T, nRow, nCol> CreateOnce();			//鍒涘缓鍗曚綅鐭╅樀
+		
+		bool operator ==(const Matrix<T, nRow, nCol>& other) const;
+		bool operator !=(const Matrix<T, nRow, nCol>& other) const;
+		void operator=(const Matrix<T, nRow, nCol>& other);
+		template<int otherRow, int otherCol>
+		Matrix<T, nRow, nCol> operator*(const Matrix<T, otherRow, otherCol>& other) const;
+		template<int otherRow, int otherCol>
+		Matrix<T, nRow, nCol>& operator*=(const Matrix<T, otherRow, otherCol>& other);
+		Matrix<T, nRow, nCol> operator*(const T&) const;
+		Matrix<T, nRow, nCol>& operator*=(const T&);
+		Matrix<T, nRow, nCol> operator+(const Matrix<T, nRow, nCol>& other) const;
+		Matrix<T, nRow, nCol>& operator+=(const Matrix<T, nRow, nCol>& other);
+		Matrix<T, nRow, nCol> operator-(const Matrix<T, nRow, nCol>& other) const;
+		Matrix<T, nRow, nCol>& operator-=(const Matrix<T, nRow, nCol>& other);
 
 #ifdef _DEBUG
 		void print();
 #endif // DEBUG
-
-
 	protected:
 		int m_nRows;
 		int m_nCols;

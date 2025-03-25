@@ -1,13 +1,13 @@
-﻿#include "Test_CoordinateSystem.h"
+﻿#pragma once
+#include "Test_CoordinateSystem.h"
 #include "GlWindow.h"
 #include "GlProgram.h"
 #include "TextureUnit.h"
 #include "Application.h"
+#include "Math.hpp"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
-#include "glm/glm.hpp"
-#include "glm/gtc/type_ptr.hpp"
 
 #include <iostream>
 
@@ -103,29 +103,31 @@ void Test::CoordinateSystem()
 	program->SetTextureUnit(&texture1, "Texture1");
 	program->SetTextureUnit(&texture2, "Texture2");
 
-	glm::mat4 model = glm::mat4(1.0f);
+	YQ::Matrix4f model; 
+	YQ::Matrix4f view = YQ::Matrix4f::CreateOnce();
+	YQ::Matrix4f projection;
 
-	glm::mat4 view;
-	view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+	YQ::Math::Translate(view, YQ::Vec<float, 3>(0.0f, 0.0f, -3.0f));
 
-	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(45.0f), wnd->Width() / (float)wnd->Height(), 0.1f, 100.0f);
+	projection = YQ::Math::CreaPerspective(YQ::Math::DegreesToRadians(45.0f), 
+		wnd->Width() / (float)wnd->Height(), 0.1f, 100.0f);
 
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	std::function<void()> fun = [&]() {
 		//传入模型矩阵
-		model = glm::rotate(glm::mat4(1.0f), (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-		program->SetUniform("model", model);
+		model = YQ::Math::Rotate(YQ::Matrix4f::CreateOnce(), 
+			(float)glfwGetTime() * YQ::Math::DegreesToRadians(50.0f), YQ::Vec<float, 3>(0.5f, 1.0f, 0.0f));
+
+		program->SetUniform("model", model.Transposition());
 
 		//传入观察矩阵
-		program->SetUniform("view", view);
+		program->SetUniform("view", view.Transposition());
 
 		//传入投影矩阵
-		program->SetUniform("projection", projection);
+		program->SetUniform("projection", projection.Transposition());
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	};
 

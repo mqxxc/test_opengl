@@ -1,13 +1,14 @@
+#pragma once
 #include "Test_Camera.h"
 #include "Application.h"
 #include "GlWindow.h"
 #include "GlProgram.h"
 #include "TextureUnit.h"
+#include "Math.hpp"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
-#include "glm/glm.hpp"
-#include "glm/gtc/type_ptr.hpp"
+
 
 void Test::Test_Camera()
 {
@@ -102,51 +103,54 @@ void Test::Test_Camera()
 	program->SetTextureUnit(&texture1, "Texture1");
 	program->SetTextureUnit(&texture2, "Texture2");
 
-	glm::mat4 model = glm::mat4(1.0f);
+	YQ::Matrix4f model = YQ::Matrix4f::CreateOnce();
 
-	glm::mat4 view;
-	view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+	YQ::Matrix4f view = YQ::Matrix4f::CreateOnce();
+	YQ::Math::Translate(view, YQ::Vec<float, 3>(0.0f, 0.0f, -3.0f));
 
-	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(45.0f), wnd->Width() / (float)wnd->Height(), 0.1f, 100.0f);
+	YQ::Matrix4f projection = YQ::Matrix4f::CreateOnce();
+	projection = YQ::Math::CreaPerspective(YQ::Math::DegreesToRadians(45.0f),
+		wnd->Width() / (float)wnd->Height(), 0.1f, 100.0f);
 
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
-	glm::vec3 cubePositions[] = {
-		glm::vec3(0.0f,  0.0f,  0.0f),
-		glm::vec3(2.0f,  5.0f, -15.0f),
-		glm::vec3(-1.5f, -2.2f, -2.5f),
-		glm::vec3(-3.8f, -2.0f, -12.3f),
-		glm::vec3(2.4f, -0.4f, -3.5f),
-		glm::vec3(-1.7f,  3.0f, -7.5f),
-		glm::vec3(1.3f, -2.0f, -2.5f),
-		glm::vec3(1.5f,  2.0f, -2.5f),
-		glm::vec3(1.5f,  0.2f, -1.5f),
-		glm::vec3(-1.3f,  1.0f, -1.5f)
+	YQ::Vec<float, 3> cubePositions[] = {
+		YQ::Vec<float, 3>(0.0f,  0.0f,  0.0f),
+		YQ::Vec<float, 3>(2.0f,  5.0f, -15.0f),
+		YQ::Vec<float, 3>(-1.5f, -2.2f, -2.5f),
+		YQ::Vec<float, 3>(-3.8f, -2.0f, -12.3f),
+		YQ::Vec<float, 3>(2.4f, -0.4f, -3.5f),
+		YQ::Vec<float, 3>(-1.7f,  3.0f, -7.5f),
+		YQ::Vec<float, 3>(1.3f, -2.0f, -2.5f),
+		YQ::Vec<float, 3>(1.5f,  2.0f, -2.5f),
+		YQ::Vec<float, 3>(1.5f,  0.2f, -1.5f),
+		YQ::Vec<float, 3>(-1.3f,  1.0f, -1.5f)
 	};
 
-	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);	//摄像机位置
-	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);	//摄像机朝向
-	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);		//世界坐标中一个向上的向量
+	YQ::Vec3f cameraPos(0.0f, 0.0f, 3.0f);		//摄像机位置
+	YQ::Vec3f cameraFront(0.0f, 0.0f, -1.0f);	//摄像机朝向
+	YQ::Vec3f cameraUp(0.0f, 1.0f, 0.0f);		//世界坐标中一个向上的向量
 
 	float lastFrame = 0.0f;
 	float deltaTime = 0.0f;
 
 	std::function<void(int, int, int, int)> ketFun = [&](int key, int scancode, int action, int mods) {
 		float cameraSpeed = 2.5f * deltaTime;
+		int op = 1;
 		switch (key)
 		{
 		case GLFW_KEY_W:
-			cameraPos += cameraSpeed * cameraFront;
+			cameraPos += cameraFront.Multiply(cameraSpeed);
 			break;
 		case GLFW_KEY_S:
-			cameraPos -= cameraSpeed * cameraFront;
+			cameraPos -= cameraFront.Multiply(cameraSpeed);
+			break;
 		case GLFW_KEY_A:
-			cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+			cameraPos -= (YQ::Math::NormalVec(cameraFront, cameraUp)).Normalization().Multiply(cameraSpeed);
 			break;
 		case GLFW_KEY_D:
-			cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+			cameraPos += (YQ::Math::NormalVec(cameraFront, cameraUp)).Normalization().Multiply(cameraSpeed);
 			break;
 		case GLFW_KEY_SPACE:
 			wnd->Close();
@@ -183,12 +187,11 @@ void Test::Test_Camera()
 		else if (pitch < -89.0f)
 			pitch = -89.0f;
 
-		glm::vec3 front;
-		front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
-		front.y = sin(glm::radians(pitch));
-		front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
-		cameraFront = glm::normalize(front);
-		int op = 1;
+		YQ::Vec3f front;
+		front[0] = cos(YQ::Math::DegreesToRadians(pitch)) * cos(YQ::Math::DegreesToRadians(yaw));
+		front[1] = sin(YQ::Math::DegreesToRadians(pitch));
+		front[2] = cos(YQ::Math::DegreesToRadians(pitch)) * sin(YQ::Math::DegreesToRadians(yaw));
+		cameraFront = front.Normalization();
 	};
 
 	std::function<void()> fun = [&]() {
@@ -200,15 +203,18 @@ void Test::Test_Camera()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		for (int i = 0; i < 10; ++i)
 		{
-			model = glm::rotate(glm::translate(glm::mat4(1.0f), cubePositions[i]), (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-			program->SetUniform("model", model);
+			model = YQ::Matrix4f::CreateOnce();
+			YQ::Math::Translate(model, cubePositions[i]);
+			model = YQ::Math::Rotate(model,
+				(float)glfwGetTime() * YQ::Math::DegreesToRadians(50.0f), YQ::Vec<float, 3>(0.5f, 1.0f, 0.0f));
+			program->SetUniform("model", model.Transposition());
 
 			//传入观察矩阵
-			view = glm::lookAt(cameraPos, (cameraPos + cameraFront), cameraUp);
-			program->SetUniform("view", view);
+			view = YQ::Math::LookAt(cameraPos, (cameraPos + cameraFront), cameraUp);
+			program->SetUniform("view", view.Transposition());
 
 			//传入投影矩阵
-			program->SetUniform("projection", projection);
+			program->SetUniform("projection", projection.Transposition());
 
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}

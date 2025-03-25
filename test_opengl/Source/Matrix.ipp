@@ -1,334 +1,372 @@
 #pragma once
 #include "Matrix.hpp"
+#include <assert.h>
 
-template<class T>
-YQ::Matrix<T>::Matrix()
+namespace YQ
 {
-	m_nRows = 0;
-	m_nCols = 0;
-}
-
-template<class T>
- YQ::Matrix<T>::Matrix(int row, int col, T defValue)
-{
-	Resize(row, col);
-	int nCount = m_nRows * m_nCols;
-	for (int i = 0; i < nCount; ++i)
+	template<typename T, int nRow, int nCol>
+	Matrix<T, nRow, nCol>::Matrix()
 	{
-		m_datas[i] = defValue;
-	}
-}
+		m_nRows = nRow;
+		m_nCols = nCol;
 
-template<class T>
- YQ::Matrix<T>::Matrix(const Matrix& other)
-{
-	Destroy();
-	m_nRows = other.m_nRows;
-	m_nCols = other.m_nCols;
-	int nCount = m_nRows * m_nCols;
-	m_datas = new T[nCount];
-	CreateIndex();
-
-	for (int i = 0; i < nCount; ++i)
-	{
-		m_datas[i] = other.m_datas[i];
-	}
-}
-
- template<class T>
- YQ::Matrix<T>::Matrix(const YQ::Vec<T>& vec)
- {
-	 Resize(1, vec.Size());
-
-	 for (int col = 0; col < m_nCols; ++col)
-	 {
-		 m_datas[col] = vec.At(col);;
-	 }
- }
-
-template<class T>
- YQ::Matrix<T>::Matrix(Matrix&& other)
-{
-	m_nRows = other.m_nRows;
-	m_nCols = other.m_nCols;
-
-	m_datas = other.m_datas;
-	other.m_datas = nullptr;
-
-	m_pIndex = other.m_pIndex;
-	other.m_pIndex = nullptr;
-}
-
-template<class T>
-YQ::Matrix<T>::~Matrix()
-{
-	Destroy();
-}
-
-template<class T>
-const T& YQ::Matrix<T>::At(int row, int col) const
-{
-	if (CheckIndex(row, col))
-	{
-		return m_pIndex[row][col];
-	}
-	return T();
-}
-
-template<class T>
-bool YQ::Matrix<T>::SetValue(int row, int col, const T& value)
-{
-	if (CheckIndex(row, col))
-	{
-		m_pIndex[row][col] = value;
-		return true;
-	}
-	return false;
-}
-
-template<class T>
-void YQ::Matrix<T>::Resize(int rows, int cols)
-{
-	 int nCount = rows * cols;
-	 if (nCount <= 0)
-	 {
-		 return;
-	 }
-
-	 Destroy();
-	 m_nRows = rows;
-	 m_nCols = cols;
-	 m_datas = new T[nCount];
-	 CreateIndex();
-}
-
-template<class T>
-int YQ::Matrix<T>::Rows() const
-{
-	 return m_nRows;
-}
-
-template<class T>
-int YQ::Matrix<T>::Cols() const
-{
-	return m_nCols;
-}
-
-template<class T>
-inline void YQ::Matrix<T>::Destroy()
-{
-}
-
-template<class T>
-void YQ::Matrix<T>::Clear()
-{
-	if (m_datas != nullptr)
-	{
-		delete m_datas;
-		m_datas = nullptr;
-	}
-
-	if (m_pIndex != nullptr)
-	{
-		delete m_pIndex;
-		m_pIndex = nullptr;
-	}
-
-	m_nCols = 0;
-	m_nRows = 0;
-}
-
-template<class T>
-bool YQ::Matrix<T>::IsEmpty() const
-{
-	 return m_datas == nullptr;
-}
-
-template<class T>
-const T* const YQ::Matrix<T>::Data() const
-{
-	 return m_datas;
-}
-
-template<class T>
-void YQ::Matrix<T>::Copy(const Matrix<T>& other)
-{
-	for (int row = 0; row < m_nRows && row < other.m_nRows; ++row)
-	{
-		for (int col = 0; col < m_nCols && col < other.m_nCols; ++col)
+		int nCount = m_nRows * m_nCols;
+		if (nCount <= 0)
 		{
-			m_pIndex[row][col] = other.m_pIndex[row][col];
+			return;
 		}
-	}
-}
 
-template<class T>
-YQ::Matrix<T> YQ::Matrix<T>::CreateOnce(int rows, int cols)
-{
-	if (rows != cols)
-	{
-		return YQ::Matrix<T>();
+		m_datas = new T[nCount];
+		CreateIndex();
 	}
 
-	YQ::Matrix<T> matrix(rows, cols);
-
-	for (int row = 0; row < rows; ++row)
+	template<typename T, int nRow, int nCol>
+	Matrix<T, nRow, nCol>::Matrix(T defValue)
+		: Matrix()
 	{
-		for (int col = 0; col < cols; ++col)
+		int nCount = m_nRows * m_nCols;
+		for (int i = 0; i < nCount; ++i)
 		{
-			matrix.m_pIndex[row][col] = row == col ? static_cast<T>(1) : static_cast<T>(0);
+			m_datas[i] = defValue;
 		}
 	}
 
-	return matrix;
-}
-
-template<class T>
-bool YQ::Matrix<T>::operator==(const YQ::Matrix<T>& other) const
-{
-	if (m_nRows != other.m_nRows || m_nCols != m_nCols)
+	template<typename T, int nRow, int nCol>
+	Matrix<T, nRow, nCol>::Matrix(const Matrix& other)
 	{
+		Destroy();
+		m_nRows = other.m_nRows;
+		m_nCols = other.m_nCols;
+		int nCount = m_nRows * m_nCols;
+		m_datas = new T[nCount];
+		CreateIndex();
+
+		for (int i = 0; i < nCount; ++i)
+		{
+			m_datas[i] = other.m_datas[i];
+		}
+	}
+
+	template<typename T, int nRow, int nCol>
+	Matrix<T, nRow, nCol>::Matrix(Matrix&& other)
+	{
+		m_nRows = other.m_nRows;
+		m_nCols = other.m_nCols;
+
+		m_datas = other.m_datas;
+		other.m_datas = nullptr;
+
+		m_pIndex = other.m_pIndex;
+		other.m_pIndex = nullptr;
+	}
+
+	template<typename T, int nRow, int nCol>
+	Matrix<T, nRow, nCol>::~Matrix()
+	{
+		Destroy();
+	}
+
+	template<typename T, int nRow, int nCol>
+	const T& Matrix<T, nRow, nCol>::At(int row, int col) const
+	{
+		if (CheckIndex(row, col))
+		{
+			return m_pIndex[row][col];
+		}
+		return T();
+	}
+
+	template<typename T, int nRow, int nCol>
+	bool Matrix<T, nRow, nCol>::SetValue(int row, int col, const T& value)
+	{
+		if (CheckIndex(row, col))
+		{
+			m_pIndex[row][col] = value;
+			return true;
+		}
 		return false;
 	}
 
-	int nCount = m_nRows * m_nCols;
-	for (int nIndex = 0; nIndex < nCount; ++nIndex)
+	template<typename T, int nRow, int nCol>
+	int Matrix<T, nRow, nCol>::Rows() const
 	{
-		if (m_datas[nIndex] != other.m_datas[nIndex])
+		return m_nRows;
+	}
+
+	template<typename T, int nRow, int nCol>
+	int Matrix<T, nRow, nCol>::Cols() const
+	{
+		return m_nCols;
+	}
+
+	template<typename T, int nRow, int nCol>
+	void Matrix<T, nRow, nCol>::Destroy()
+	{
+		if (m_datas != nullptr)
+		{
+			delete m_datas;
+			m_datas = nullptr;
+		}
+
+		if (m_pIndex != nullptr)
+		{
+			delete m_pIndex;
+			m_pIndex = nullptr;
+		}
+		m_nRows = 0;
+		m_nCols = 0;
+	}
+
+	template<typename T, int nRow, int nCol>
+	void Matrix<T, nRow, nCol>::Clear()
+	{
+		if (m_datas != nullptr)
+		{
+			delete m_datas;
+			m_datas = nullptr;
+		}
+
+		if (m_pIndex != nullptr)
+		{
+			delete m_pIndex;
+			m_pIndex = nullptr;
+		}
+
+		m_nCols = 0;
+		m_nRows = 0;
+	}
+
+	template<typename T, int nRow, int nCol>
+	bool Matrix<T, nRow, nCol>::IsEmpty() const
+	{
+		return m_datas == nullptr;
+	}
+
+	template<typename T, int nRow, int nCol>
+	const T* const Matrix<T, nRow, nCol>::Data() const
+	{
+		return m_datas;
+	}
+
+	template<typename T, int nRow, int nCol>
+	inline Matrix<T, nCol, nRow> Matrix<T, nRow, nCol>::Transposition() const
+	{
+		Matrix<T, nCol, nRow> temp;
+		for (int row = 0; row < m_nRows; ++row)
+		{
+			for (int col = 0; col < m_nCols; ++col)
+			{
+				temp.m_pIndex[col][row] = m_pIndex[row][col];
+			}
+		}
+		return temp;
+	}
+
+	template<typename T, int nRow, int nCol>
+	template<int otherRow, int otherCol>
+	void Matrix<T, nRow, nCol>::Copy(const Matrix<T, otherRow, otherCol>& other)
+	{
+		for (int row = 0; row < m_nRows && row < other.Rows(); ++row)
+		{
+			for (int col = 0; col < m_nCols && col < other.Cols(); ++col)
+			{
+				m_pIndex[row][col] = other.At(row,col);
+			}
+		}
+	}
+
+	template<typename T, int nRow, int nCol>
+	Matrix<T, nRow, nCol> Matrix<T, nRow, nCol>::CreateOnce()
+	{
+		if (nRow != nCol)
+		{
+			return Matrix<T, nRow, nCol>();
+		}
+
+		Matrix<T, nRow, nCol> matrix;
+
+		for (int row = 0; row < nRow; ++row)
+		{
+			for (int col = 0; col < nCol; ++col)
+			{
+				matrix.m_pIndex[row][col] = row == col ? static_cast<T>(1) : static_cast<T>(0);
+			}
+		}
+
+		return matrix;
+	}
+
+	template<typename T, int nRow, int nCol>
+	bool Matrix<T, nRow, nCol>::operator==(const Matrix<T, nRow, nCol>& other) const
+	{
+		if (m_nRows != other.m_nRows || m_nCols != m_nCols)
 		{
 			return false;
 		}
-	}
 
-	return true;
-}
-
-template<class T>
-inline bool YQ::Matrix<T>::operator!=(const Matrix<T>& other) const
-{
-	return !(*this) == other;
-}
-
-template<class T>
-void YQ::Matrix<T>::operator=(const Matrix<T>& other)
-{
-	assert(m_nRows == other.m_nRows && m_nCols == other.m_nCols);
-
-	int nSize = m_nRows * m_nCols;
-	for (int i = 0; i < nSize; ++i)
-	{
-		m_datas[i] = other.m_datas[i];
-	}
-}
-
-template<class T>
-YQ::Matrix<T> YQ::Matrix<T>::operator*(const Matrix<T>& other) const
-{
-	assert(m_nCols == other.m_nRows && !IsEmpty() && !other.IsEmpty());
-	Matrix<T> tempMatrix(m_nRows, other.m_nCols);
-	for (int row = 0; row < m_nRows; ++row)
-	{
-		for (int col = 0; col < other.m_nCols; ++col)
+		int nCount = m_nRows * m_nCols;
+		for (int nIndex = 0; nIndex < nCount; ++nIndex)
 		{
-			T temp = T();
-			for (int i = 0; i < m_nCols; ++i)
+			if (m_datas[nIndex] != other.m_datas[nIndex])
 			{
-				temp += m_pIndex[row][i] * other.m_pIndex[i][col];
+				return false;
 			}
-
-			tempMatrix.SetValue(row, col, temp);
 		}
+
+		return true;
 	}
 
-	return tempMatrix;
-}
-
-template<class T>
-YQ::Matrix<T>& YQ::Matrix<T>::operator*=(const Matrix<T>& other)
-{
-	(*this) = (*this) * other;
-	return *this;
-}
-
-template<class T>
-YQ::Matrix<T> YQ::Matrix<T>::operator*(const T& value) const
-{
-	Matrix<T> temp(*this);
-	int nSize = m_nRows * m_nCols;
-	for (int i = 0; i < nSize; ++i)
+	template<typename T, int nRow, int nCol>
+	inline bool Matrix<T, nRow, nCol>::operator!=(const Matrix<T, nRow, nCol>& other) const
 	{
-		temp.m_datas[i] *= value;
+		return !(*this) == other;
 	}
-	return temp;
-}
 
-template<class T>
-YQ::Matrix<T>& YQ::Matrix<T>::operator*=(const T& value)
-{
-	int nSize = m_nRows * m_nCols;
-	for (int i = 0; i < nSize; ++i)
+	template<typename T, int nRow, int nCol>
+	void Matrix<T, nRow, nCol>::operator=(const Matrix<T, nRow, nCol>& other)
 	{
-		m_datas[i] *= value;
-	}
-	return *this;
-}
+		assert(m_nRows == other.m_nRows && m_nCols == other.m_nCols);
 
-template<class T>
-YQ::Matrix<T> YQ::Matrix<T>::operator+(const Matrix<T>& other) const
-{
-	assert(m_nRows == other.m_nRows && m_nCols == other.m_nCols
-		&& !IsEmpty() && !other.IsEmpty());
-
-	Matrix<T> temp(m_nRows, m_nCols);
-
-	for (int row = 0; row < m_nRows; ++row)
-	{
-		for (int col = 0; col < m_nCols; ++col)
+		int nSize = m_nRows * m_nCols;
+		for (int i = 0; i < nSize; ++i)
 		{
-			temp.m_pIndex[row][col] = m_pIndex[row][col] + other.m_pIndex[row][col];
+			m_datas[i] = other.m_datas[i];
 		}
 	}
 
-	return temp;
-}
-
-template<class T>
-YQ::Matrix<T>& YQ::Matrix<T>::operator+=(const Matrix<T>& other)
-{
-	(*this) = (*this) + other;
-	return (*this);
-}
-
-template<class T>
-YQ::Matrix<T> YQ::Matrix<T>::operator-(const Matrix<T>& other) const
-{
-	assert(m_nRows == other.m_nRows && m_nCols == other.m_nCols
-		&& !IsEmpty() && !other.IsEmpty());
-
-	Matrix<T> temp(m_nRows, m_nCols);
-
-	for (int row = 0; row < m_nRows; ++row)
+	template<typename T, int nRow, int nCol>
+	template<int otherRow, int otherCol>
+	Matrix<T, nRow, nCol> Matrix<T, nRow, nCol>::operator*(const Matrix<T, otherRow, otherCol>& other) const
 	{
-		for (int col = 0; col < m_nCols; ++col)
+		assert(m_nCols == other.m_nRows && !IsEmpty() && !other.IsEmpty());
+		Matrix<T, nRow, otherCol> tempMatrix;
+		for (int row = 0; row < m_nRows; ++row)
 		{
-			temp.m_pIndex[row][col] = m_pIndex[row][col] - other.m_pIndex[row][col];
+			for (int col = 0; col < other.m_nCols; ++col)
+			{
+				T temp = T();
+				for (int i = 0; i < m_nCols; ++i)
+				{
+					temp += m_pIndex[row][i] * other.m_pIndex[i][col];
+				}
+
+				tempMatrix.SetValue(row, col, temp);
+			}
+		}
+
+		return tempMatrix;
+	}
+
+	template<typename T, int nRow, int nCol>
+	template<int otherRow, int otherCol>
+	Matrix<T, nRow, nCol>& Matrix<T, nRow, nCol>::operator*=(const Matrix<T, otherRow, otherCol>& other)
+	{
+		(*this) = (*this) * other;
+		return *this;
+	}
+
+	template<typename T, int nRow, int nCol>
+	Matrix<T, nRow, nCol> Matrix<T, nRow, nCol>::operator*(const T& value) const
+	{
+		Matrix<T, nRow, nCol> temp(*this);
+		int nSize = m_nRows * m_nCols;
+		for (int i = 0; i < nSize; ++i)
+		{
+			temp.m_datas[i] *= value;
+		}
+		return temp;
+	}
+
+	template<typename T, int nRow, int nCol>
+	Matrix<T, nRow, nCol>& Matrix<T, nRow, nCol>::operator*=(const T& value)
+	{
+		int nSize = m_nRows * m_nCols;
+		for (int i = 0; i < nSize; ++i)
+		{
+			m_datas[i] *= value;
+		}
+		return *this;
+	}
+
+	template<typename T, int nRow, int nCol>
+	Matrix<T, nRow, nCol> Matrix<T, nRow, nCol>::operator+(const Matrix<T, nRow, nCol>& other) const
+	{
+		assert(m_nRows == other.m_nRows && m_nCols == other.m_nCols
+			&& !IsEmpty() && !other.IsEmpty());
+
+		Matrix<T, nRow, nCol> temp;
+
+		for (int row = 0; row < m_nRows; ++row)
+		{
+			for (int col = 0; col < m_nCols; ++col)
+			{
+				temp.m_pIndex[row][col] = m_pIndex[row][col] + other.m_pIndex[row][col];
+			}
+		}
+
+		return temp;
+	}
+
+	template<typename T, int nRow, int nCol>
+	Matrix<T, nRow, nCol>& Matrix<T, nRow, nCol>::operator+=(const Matrix<T, nRow, nCol>& other)
+	{
+		(*this) = (*this) + other;
+		return (*this);
+	}
+
+	template<typename T, int nRow, int nCol>
+	Matrix<T, nRow, nCol> Matrix<T, nRow, nCol>::operator-(const Matrix<T, nRow, nCol>& other) const
+	{
+		assert(m_nRows == other.m_nRows && m_nCols == other.m_nCols
+			&& !IsEmpty() && !other.IsEmpty());
+
+		Matrix<T, nRow, nCol> temp(m_nRows, m_nCols);
+
+		for (int row = 0; row < m_nRows; ++row)
+		{
+			for (int col = 0; col < m_nCols; ++col)
+			{
+				temp.m_pIndex[row][col] = m_pIndex[row][col] - other.m_pIndex[row][col];
+			}
+		}
+
+		return temp;
+	}
+
+	template<typename T, int nRow, int nCol>
+	Matrix<T, nRow, nCol>& Matrix<T, nRow, nCol>::operator-=(const Matrix<T, nRow, nCol>& other)
+	{
+		(*this) = (*this) - other;
+		return (*this);
+	}
+
+	template<typename T, int nRow, int nCol>
+	void Matrix<T, nRow, nCol>::CreateIndex()
+	{
+		if (m_pIndex != nullptr)
+		{
+			delete m_pIndex;
+		}
+
+		m_pIndex = new T * [m_nRows];
+		for (int row = 0; row < m_nRows; ++row)
+		{
+			m_pIndex[row] = &m_datas[row * m_nCols];
 		}
 	}
 
-	return temp;
-}
-
-template<class T>
-YQ::Matrix<T>& YQ::Matrix<T>::operator-=(const Matrix<T>& other)
-{
-	(*this) = (*this) - other;
-	return (*this);
+	template<typename T, int nRow, int nCol>
+	bool Matrix<T, nRow, nCol>::CheckIndex(int row, int col) const
+	{
+		return (row > -1 && row < m_nRows)
+			&& (col > -1 && col < m_nCols);
+	}
 }
 
 #ifdef _DEBUG
 #include <iostream>
-template<class T>
-void YQ::Matrix<T>::print()
+template<typename T, int nRow, int nCol>
+void YQ::Matrix<T, nRow, nCol>::print()
 {
 	for (int row = 0; row < m_nRows; ++row)
 	{
@@ -341,25 +379,3 @@ void YQ::Matrix<T>::print()
 	std::cout << std::endl;
 }
 #endif // _DEBUG
-
-template<class T>
-void YQ::Matrix<T>::CreateIndex()
-{
-	if (m_pIndex != nullptr)
-	{
-		delete m_pIndex;
-	}
-
-	m_pIndex = new T * [m_nRows];
-	for (int row = 0; row < m_nRows; ++row)
-	{
-		m_pIndex[row] = &m_datas[row * m_nCols];
-	}
-}
-
- template<class T>
- bool YQ::Matrix<T>::CheckIndex(int row, int col) const
- {
-	return (row > -1 && row < m_nRows) 
-		&& (col > -1 && col < m_nCols);
- }
