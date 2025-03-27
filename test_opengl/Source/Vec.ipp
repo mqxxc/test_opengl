@@ -143,7 +143,16 @@ namespace YQ
 	}
 
 	template<typename T, int nSize>
-	inline Vec<T, nSize> Vec<T, nSize>::Multiply(const T& value) const
+	T& Vec<T, nSize>::operator[](int nIndex)
+	{
+		assert(m_data != nullptr && (nIndex >= 0 && nIndex < m_nSize));
+
+		return m_data[nIndex];
+	}
+
+	template<typename T, int nSize>
+	template<typename U, typename std::enable_if<!std::is_same<U, Vec<T, nSize>>::value, bool>::type>
+	inline Vec<T, nSize> Vec<T, nSize>::operator*(const U& value) const
 	{
 		Vec<T, nSize> res(*this);
 		for (int i = 0; i < m_nSize; ++i)
@@ -154,14 +163,7 @@ namespace YQ
 	}
 
 	template<typename T, int nSize>
-	T& Vec<T, nSize>::operator[](int nIndex)
-	{
-		assert(m_data != nullptr && (nIndex >= 0 && nIndex < m_nSize));
-
-		return m_data[nIndex];
-	}
-
-	template<typename T, int nSize>
+	template<typename U, typename std::enable_if<std::is_same<U, Vec<T, nSize>>::value, bool>::type>
 	inline Vec<T, nSize> Vec<T, nSize>::operator*(const Vec<T, nSize>& vec) const
 	{
 		Vec<T, nSize> temp;

@@ -5,10 +5,10 @@
 #include "GlProgram.h"
 #include "TextureUnit.h"
 #include "Math.hpp"
+#include "Camera.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
-
 
 void Test::Test_Camera()
 {
@@ -103,15 +103,6 @@ void Test::Test_Camera()
 	program->SetTextureUnit(&texture1, "Texture1");
 	program->SetTextureUnit(&texture2, "Texture2");
 
-	YQ::Matrix4f model = YQ::Matrix4f::CreateOnce();
-
-	YQ::Matrix4f view = YQ::Matrix4f::CreateOnce();
-	YQ::Math::Translate(view, YQ::Vec<float, 3>(0.0f, 0.0f, -3.0f));
-
-	YQ::Matrix4f projection = YQ::Matrix4f::CreateOnce();
-	projection = YQ::Math::CreaPerspective(YQ::Math::DegreesToRadians(45.0f),
-		wnd->Width() / (float)wnd->Height(), 0.1f, 100.0f);
-
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
@@ -128,29 +119,26 @@ void Test::Test_Camera()
 		YQ::Vec<float, 3>(-1.3f,  1.0f, -1.5f)
 	};
 
-	YQ::Vec3f cameraPos(0.0f, 0.0f, 3.0f);		//摄像机位置
-	YQ::Vec3f cameraFront(0.0f, 0.0f, -1.0f);	//摄像机朝向
-	YQ::Vec3f cameraUp(0.0f, 1.0f, 0.0f);		//世界坐标中一个向上的向量
-
 	float lastFrame = 0.0f;
 	float deltaTime = 0.0f;
+	Camera camera;
 
 	std::function<void(int, int, int, int)> ketFun = [&](int key, int scancode, int action, int mods) {
 		float cameraSpeed = 2.5f * deltaTime;
-		int op = 1;
+		Camera::Camera_Movement direction = Camera::Camera_Movement::eNone;
 		switch (key)
 		{
 		case GLFW_KEY_W:
-			cameraPos += cameraFront.Multiply(cameraSpeed);
+			direction = Camera::Camera_Movement::eFORWARD;
 			break;
 		case GLFW_KEY_S:
-			cameraPos -= cameraFront.Multiply(cameraSpeed);
+			direction = Camera::Camera_Movement::eBACKWARD;
 			break;
 		case GLFW_KEY_A:
-			cameraPos -= (YQ::Math::NormalVec(cameraFront, cameraUp)).Normalization().Multiply(cameraSpeed);
+			direction = Camera::Camera_Movement::eLEFT;
 			break;
 		case GLFW_KEY_D:
-			cameraPos += (YQ::Math::NormalVec(cameraFront, cameraUp)).Normalization().Multiply(cameraSpeed);
+			direction = Camera::Camera_Movement::eRIGHT;
 			break;
 		case GLFW_KEY_SPACE:
 			wnd->Close();
@@ -158,63 +146,49 @@ void Test::Test_Camera()
 		default:
 			break;
 		}
+		camera.OnMovePos(direction, cameraSpeed);
 	};
 
 	float lastX = 400, lastY = 300;
 	float yaw = 0, pitch = 0;
-	bool firstMouse = true;
 
 	std::function<void(double, double)> mouseMove = [&](double xpos, double ypos){
-		if (firstMouse)
-		{
-			lastX = xpos;
-			lastY = ypos;
-			firstMouse = false;
-		}
-		float xoffset = xpos - lastX;
-		float yoffset = ypos - lastY;
-
+		camera.OnMoveView(xpos - lastX, ypos - lastY);
 		lastX = xpos;
 		lastY = ypos;
-
-		float sensitivity = 0.05f;
-
-		yaw += xoffset * sensitivity;
-		pitch += yoffset * sensitivity;
-
-		if (pitch > 89.0f)
-			pitch = 89.0f;
-		else if (pitch < -89.0f)
-			pitch = -89.0f;
-
-		YQ::Vec3f front;
-		front[0] = cos(YQ::Math::DegreesToRadians(pitch)) * cos(YQ::Math::DegreesToRadians(yaw));
-		front[1] = sin(YQ::Math::DegreesToRadians(pitch));
-		front[2] = cos(YQ::Math::DegreesToRadians(pitch)) * sin(YQ::Math::DegreesToRadians(yaw));
-		cameraFront = front.Normalization();
 	};
 
+	std::function<void(double, double)> wheel = [&](double xpos, double ypos) {
+		camera.OnZoomView(ypos);
+	};
+
+	YQ::Matrix4f model = YQ::Matrix4f::CreateOnce();
+
+	YQ::Matrix4f projection = YQ::Matrix4f::CreateOnce();
+
 	std::function<void()> fun = [&]() {
-		//传入模型矩阵
 		float curTime = static_cast<float>(glfwGetTime());
 		deltaTime = curTime - lastFrame;
 		lastFrame = curTime;
+		
+		//传入观察矩阵
+		YQ::Matrix4f view = camera.GetViweMatrix();
+		program->SetUniform("view", view.Transposition());
+
+		//传入投影矩阵
+		projection = YQ::Math::CreaPerspective(YQ::Math::DegreesToRadians(camera.GetScale()),
+			wnd->Width() / (float)wnd->Height(), 0.1f, 100.0f);
+		program->SetUniform("projection", projection.Transposition());
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		for (int i = 0; i < 10; ++i)
 		{
+			//传入模型矩阵
 			model = YQ::Matrix4f::CreateOnce();
 			YQ::Math::Translate(model, cubePositions[i]);
 			model = YQ::Math::Rotate(model,
 				(float)glfwGetTime() * YQ::Math::DegreesToRadians(50.0f), YQ::Vec<float, 3>(0.5f, 1.0f, 0.0f));
 			program->SetUniform("model", model.Transposition());
-
-			//传入观察矩阵
-			view = YQ::Math::LookAt(cameraPos, (cameraPos + cameraFront), cameraUp);
-			program->SetUniform("view", view.Transposition());
-
-			//传入投影矩阵
-			program->SetUniform("projection", projection.Transposition());
 
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
@@ -223,6 +197,7 @@ void Test::Test_Camera()
 	wnd->SetMouseMove(mouseMove);
 	wnd->SetKeyEnter(ketFun);
 	wnd->SetPrint(fun);
+	wnd->SetWheel(wheel);
 	app.Exec();
 
 	glDeleteVertexArrays(1, &VAO);

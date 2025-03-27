@@ -22,6 +22,7 @@ GlWindow::GlWindow(const std::string& strTitle, int nWidth, int nHeight)
 	glfwSetKeyCallback(m_pWnd, GlWindow::OnProcessInput_g);
 	glfwSetWindowCloseCallback(m_pWnd, GlWindow::OnWndClose_g);
 	glfwSetCursorPosCallback(m_pWnd, GlWindow::OnMouseMove_g);
+	glfwSetScrollCallback(m_pWnd, GlWindow::OnWheel_g);
 }
 
 GlWindow::~GlWindow()
@@ -49,6 +50,11 @@ void GlWindow::SetKeyEnter(std::function<void(int, int, int, int)> fun)
 void GlWindow::SetMouseMove(std::function<void(double, double)> fun)
 {
 	m_funMoudeMove = fun;
+}
+
+void GlWindow::SetWheel(std::function<void(double, double)> fun)
+{
+	m_funWheel = fun;
 }
 
 void GlWindow::SetInputMode(int mode, int value)
@@ -110,6 +116,14 @@ void GlWindow::OnMouseMove(double xpos, double ypos)
 	}
 }
 
+void GlWindow::OnWheel(double xpos, double ypos)
+{
+	if (m_funWheel != nullptr)
+	{
+		m_funWheel(xpos, ypos);
+	}
+}
+
 void GlWindow::OnWndSizeChange_g(GLFWwindow* wnd, int nWidth, int nHeight)
 {
 	if (m_mapping.find(wnd) != m_mapping.end())
@@ -139,6 +153,14 @@ void GlWindow::OnMouseMove_g(GLFWwindow* wnd, double xpos, double ypos)
 	if (m_mapping.find(wnd) != m_mapping.end())
 	{
 		m_mapping[wnd]->OnMouseMove(xpos, ypos);
+	}
+}
+
+void GlWindow::OnWheel_g(GLFWwindow* wnd, double xpos, double ypos)
+{
+	if (m_mapping.find(wnd) != m_mapping.end())
+	{
+		m_mapping[wnd]->OnWheel(xpos, ypos);
 	}
 }
 

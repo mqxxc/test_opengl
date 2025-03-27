@@ -1,4 +1,5 @@
 #pragma once
+#include <type_traits>
 namespace YQ
 {
 	template<typename T, int nSize>
@@ -21,9 +22,12 @@ namespace YQ
 		void Destroy();
 		Vec<T, nSize>& Normalization();
 		const T* const Data() const;
-		Vec<T, nSize> Multiply(const T& value) const;
 
 		T& operator[](int nIndex);
+
+		template<typename U = T, typename std::enable_if<!std::is_same<U, Vec<T, nSize>>::value, bool>::type = false>
+		Vec<T, nSize> operator*(const U& vec) const;
+		template<typename U = T, typename std::enable_if<std::is_same<U, Vec<T, nSize>>::value, bool>::type = true>
 		Vec<T, nSize> operator*(const Vec<T, nSize>& vec) const;
 		Vec<T, nSize> operator+(const Vec<T, nSize>& vec) const;
 		Vec<T, nSize>& operator+=(const Vec<T, nSize>& vec);
