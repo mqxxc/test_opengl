@@ -47,7 +47,7 @@ public:
 
 private:
 	uint m_nProgramID = -1;
-	Shader* m_listShader[2];
+	Shader* m_listShader[2] = {nullptr, nullptr};
 
 	void ClearShader();
 };

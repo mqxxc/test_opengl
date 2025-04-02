@@ -82,6 +82,16 @@ namespace YQ
 			return matrix * RMatrix;
 		}
 
+		inline void Scale(Matrix4f& matrix, const Vec3f& vec)
+		{
+			Matrix4f temp = Matrix4f::CreateOnce();
+			for (int i = 0; i < vec.Size(); ++i)
+			{
+				temp.SetValue(i, i, vec.At(i));
+			}
+			matrix *= temp;
+		}
+
 		inline Vec3f NormalVec(const Vec3f& vec1, const Vec3f& vec2)
 		{
 			Vec3f vec;

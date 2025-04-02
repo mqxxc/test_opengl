@@ -131,7 +131,14 @@ bool GlProgram::Complete()
 
 	for (auto it : m_listShader)
 	{
-		glAttachShader(m_nProgramID, it->ShaderID());
+		if (it != nullptr)
+		{
+			glAttachShader(m_nProgramID, it->ShaderID());
+		}
+		else
+		{
+			throw "Shader exit nullptr";
+		}
 	}
 	glLinkProgram(m_nProgramID);
 

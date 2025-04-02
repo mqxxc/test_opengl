@@ -167,6 +167,7 @@
     <ClCompile Include="Source\Test_Texture.cpp" />
     <ClCompile Include="Source\TextureUnit.cpp" />
     <ClCompile Include="Source\Test_Camera.cpp" />
+    <ClCompile Include="Source\Test_Light.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gl\Camera.h" />
@@ -468,6 +469,7 @@
     <ClInclude Include="Source\Tool.hpp" />
     <ClInclude Include="Source\Vec.ipp" />
     <ClInclude Include="Test\Test_CoordinateSystem.h" />
+    <ClInclude Include="Test\Test_Light.h" />
     <ClInclude Include="Test\Test_Texture.h" />
     <ClInclude Include="Gl\TextureUnit.h" />
     <ClInclude Include="Test\Test_Camera.h" />
@@ -617,6 +619,7 @@
     <None Include="Header\glm\gtx\vector_query.inl" />
     <None Include="Header\glm\gtx\wrap.inl" />
     <ClInclude Include="Source\Matrix.ipp" />
+    <None Include="src\shader\Light_block.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
