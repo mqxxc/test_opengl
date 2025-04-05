@@ -107,7 +107,7 @@ void Test::CoordinateSystem()
 	YQ::Matrix4f view = YQ::Matrix4f::CreateOnce();
 	YQ::Matrix4f projection;
 
-	YQ::Math::Translate(view, YQ::Vec<float, 3>(0.0f, 0.0f, -3.0f));
+	YQ::Math::Translate(view, YQ::Vec3f(0.0f, 0.0f, -3.0f));
 
 	projection = YQ::Math::CreaPerspective(YQ::Math::DegreesToRadians(45.0f), 
 		wnd->Width() / (float)wnd->Height(), 0.1f, 100.0f);
@@ -117,7 +117,7 @@ void Test::CoordinateSystem()
 	std::function<void()> fun = [&]() {
 		//传入模型矩阵
 		model = YQ::Math::Rotate(YQ::Matrix4f::CreateOnce(), 
-			(float)glfwGetTime() * YQ::Math::DegreesToRadians(50.0f), YQ::Vec<float, 3>(0.5f, 1.0f, 0.0f));
+			(float)glfwGetTime() * YQ::Math::DegreesToRadians(50.0f), YQ::Vec3f(0.5f, 1.0f, 0.0f));
 
 		program->SetUniform("model", model.Transposition());
 

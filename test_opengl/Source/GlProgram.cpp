@@ -182,19 +182,22 @@ void GlProgram::SetUniform(const std::string& name, float x, float y, float z, f
 	glUniform4f(glGetUniformLocation(m_nProgramID, name.c_str()), x, y, z, w);
 }
 
-void GlProgram::SetUniform(const std::string& name, const YQ::Vec<float, 2>& value) const
+void GlProgram::SetUniform(const std::string& name, const YQ::Vec<float>& vec)
 {
-	glUniform2fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, value.Data());
-}
-
-void GlProgram::SetUniform(const std::string& name, const YQ::Vec<float, 3>& value) const
-{
-	glUniform3fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, value.Data());
-}
-
-void GlProgram::SetUniform(const std::string& name, const YQ::Vec<float, 4>& value) const
-{
-	glUniform4fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, value.Data());
+	switch (vec.Size())
+	{
+	case 2:
+		glUniform2fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, vec.Data());
+		break;
+	case 3:
+		glUniform3fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, vec.Data());
+		break;
+	case 4:
+		glUniform4fv(glGetUniformLocation(m_nProgramID, name.c_str()), 1, vec.Data());
+		break;
+	default:
+		break;
+	}
 }
 
 void GlProgram::SetUniform(const std::string& name, const YQ::Matrix<float, 2, 2>& value) const

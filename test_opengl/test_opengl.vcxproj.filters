@@ -980,23 +980,22 @@
     <ClInclude Include="math\Matrix.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Matrix.ipp" />
     <ClInclude Include="Source\Tool.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="math\Vec.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Vec.ipp">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="math\Math.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math.ipp">
+    <ClInclude Include="Test\Test_Light.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Test\Test_Light.h">
+    <ClInclude Include="math\Vec2.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="math\Vec3.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1415,6 +1414,5 @@
     <None Include="Header\glm\gtx\wrap.inl">
       <Filter>头文件</Filter>
     </None>
-    <None Include="src\shader\Light_block.fs" />
   </ItemGroup>
 </Project>

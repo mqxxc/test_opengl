@@ -66,6 +66,11 @@ void Camera::OnZoomView(float yoffset)
 		m_zoom = 45.0f;
 }
 
+void Camera::SetCameraPos(const YQ::Vec3f& pos)
+{
+	m_cameraPos = pos;
+}
+
 void Camera::UpdateSelfVec()
 {
 	YQ::Vec3f front;

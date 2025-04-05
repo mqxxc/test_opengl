@@ -7,12 +7,6 @@
 #include "Test_Camera.h"
 #include "Test_Light.h"
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include "math/Math.hpp"
-
 int main()
 {
 	Test::Test_Light();

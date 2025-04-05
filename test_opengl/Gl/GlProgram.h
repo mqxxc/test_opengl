@@ -38,9 +38,7 @@ public:
 	void SetUniform(const std::string& name, float x, float y) const;
 	void SetUniform(const std::string& name, float x, float y, float z) const;
 	void SetUniform(const std::string& name, float x, float y, float z, float w) const;
-	void SetUniform(const std::string& name, const YQ::Vec<float, 2>& value) const;
-	void SetUniform(const std::string& name, const YQ::Vec<float, 3>& value) const;
-	void SetUniform(const std::string& name, const YQ::Vec<float, 4>& value) const;
+	void SetUniform(const std::string& name, const YQ::Vec<float>& vec);
 	void SetUniform(const std::string& name, const YQ::Matrix<float, 2, 2>& value) const;
 	void SetUniform(const std::string& name, const YQ::Matrix<float, 3, 3>& value) const;
 	void SetUniform(const std::string& name, const YQ::Matrix<float, 4, 4>& value) const;

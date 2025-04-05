@@ -21,7 +21,7 @@ public:
 	void OnMovePos(Camera_Movement direction, float deltaTime);
 	void OnMoveView(float xOffset, float yOffset, bool constraint = true);
 	void OnZoomView(float yoffset);
-	
+	void SetCameraPos(const YQ::Vec3f& pos);
 
 private:
 	//Å·À­½Ç

@@ -15,7 +15,7 @@ void Test::Test_Camera()
 	Application app;
 	GlWindow* wnd = new GlWindow("LearnOpenGL", 800, 600);
 	wnd->MakeContextCurrent();
-	wnd->SetInputMode(GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	//wnd->SetInputMode(GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	GlProgram* program = new GlProgram;
 	program->CreateVertexShaderFromFile("src/shader/CoordinateSystem.vs");
@@ -106,17 +106,17 @@ void Test::Test_Camera()
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
-	YQ::Vec<float, 3> cubePositions[] = {
-		YQ::Vec<float, 3>(0.0f,  0.0f,  0.0f),
-		YQ::Vec<float, 3>(2.0f,  5.0f, -15.0f),
-		YQ::Vec<float, 3>(-1.5f, -2.2f, -2.5f),
-		YQ::Vec<float, 3>(-3.8f, -2.0f, -12.3f),
-		YQ::Vec<float, 3>(2.4f, -0.4f, -3.5f),
-		YQ::Vec<float, 3>(-1.7f,  3.0f, -7.5f),
-		YQ::Vec<float, 3>(1.3f, -2.0f, -2.5f),
-		YQ::Vec<float, 3>(1.5f,  2.0f, -2.5f),
-		YQ::Vec<float, 3>(1.5f,  0.2f, -1.5f),
-		YQ::Vec<float, 3>(-1.3f,  1.0f, -1.5f)
+	YQ::Vec3f cubePositions[] = {
+		YQ::Vec3f(0.0f,  0.0f,  0.0f),
+		YQ::Vec3f(2.0f,  5.0f, -15.0f),
+		YQ::Vec3f(-1.5f, -2.2f, -2.5f),
+		YQ::Vec3f(-3.8f, -2.0f, -12.3f),
+		YQ::Vec3f(2.4f, -0.4f, -3.5f),
+		YQ::Vec3f(-1.7f,  3.0f, -7.5f),
+		YQ::Vec3f(1.3f, -2.0f, -2.5f),
+		YQ::Vec3f(1.5f,  2.0f, -2.5f),
+		YQ::Vec3f(1.5f,  0.2f, -1.5f),
+		YQ::Vec3f(-1.3f,  1.0f, -1.5f)
 	};
 
 	float lastFrame = 0.0f;
@@ -187,7 +187,7 @@ void Test::Test_Camera()
 			model = YQ::Matrix4f::CreateOnce();
 			YQ::Math::Translate(model, cubePositions[i]);
 			model = YQ::Math::Rotate(model,
-				(float)glfwGetTime() * YQ::Math::DegreesToRadians(50.0f), YQ::Vec<float, 3>(0.5f, 1.0f, 0.0f));
+				(float)glfwGetTime() * YQ::Math::DegreesToRadians(50.0f), YQ::Vec3f(0.5f, 1.0f, 0.0f));
 			program->SetUniform("model", model.Transposition());
 
 			glDrawArrays(GL_TRIANGLES, 0, 36);

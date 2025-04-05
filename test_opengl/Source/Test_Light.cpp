@@ -26,47 +26,47 @@ void Test::Test_Light()
 	lightProgram->Complete();
 
 	float vertices[] = {
-	-0.5f, -0.5f, -0.5f,
-	 0.5f, -0.5f, -0.5f,
-	 0.5f,  0.5f, -0.5f,
-	 0.5f,  0.5f, -0.5f,
-	-0.5f,  0.5f, -0.5f,
-	-0.5f, -0.5f, -0.5f,
+	 -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-	-0.5f, -0.5f,  0.5f,
-	 0.5f, -0.5f,  0.5f,
-	 0.5f,  0.5f,  0.5f,
-	 0.5f,  0.5f,  0.5f,
-	-0.5f,  0.5f,  0.5f,
-	-0.5f, -0.5f,  0.5f,
+	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
 
-	-0.5f,  0.5f,  0.5f,
-	-0.5f,  0.5f, -0.5f,
-	-0.5f, -0.5f, -0.5f,
-	-0.5f, -0.5f, -0.5f,
-	-0.5f, -0.5f,  0.5f,
-	-0.5f,  0.5f,  0.5f,
+	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+	-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
 
-	 0.5f,  0.5f,  0.5f,
-	 0.5f,  0.5f, -0.5f,
-	 0.5f, -0.5f, -0.5f,
-	 0.5f, -0.5f, -0.5f,
-	 0.5f, -0.5f,  0.5f,
-	 0.5f,  0.5f,  0.5f,
+	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
 
-	-0.5f, -0.5f, -0.5f,
-	 0.5f, -0.5f, -0.5f,
-	 0.5f, -0.5f,  0.5f,
-	 0.5f, -0.5f,  0.5f,
-	-0.5f, -0.5f,  0.5f,
-	-0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 
-	-0.5f,  0.5f, -0.5f,
-	 0.5f,  0.5f, -0.5f,
-	 0.5f,  0.5f,  0.5f,
-	 0.5f,  0.5f,  0.5f,
-	-0.5f,  0.5f,  0.5f,
-	-0.5f,  0.5f, -0.5f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+	 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 	};
 
 	//顶点输入
@@ -81,14 +81,16 @@ void Test::Test_Light()
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);//启用顶点属性
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	//光源属性
 	glGenVertexArrays(1, &VAO_light);
 	glBindVertexArray(VAO_light);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
 	glEnable(GL_DEPTH_TEST);		//开启深度测试
@@ -118,7 +120,6 @@ void Test::Test_Light()
 			wnd->Close();
 			break;
 		default:
-			return;
 			break;
 		}
 		camera.OnMovePos(direction, cameraSpeed);
@@ -133,24 +134,25 @@ void Test::Test_Light()
 		lastY = ypos;
 	};
 
-	std::function<void(double, double)> wheel = [&](double xpos, double ypos) {
-		camera.OnZoomView(ypos);
-	};
+	camera.SetCameraPos({ 1.7f ,1.5f ,5.0f });
+	camera.OnMoveView(0.0f, 120.0f);
 
 	YQ::Vec3f lightPos(1.2f, 1.0f, 2.0f);
 
-	std::function<void()> fun = [&]() {
-		float currentFrame = static_cast<float>(glfwGetTime());
-		deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
+	program->Use();
+	program->SetUniform("objColor", YQ::Vec3f(1.0f, 0.5f, 0.31f));
+	program->SetUniform("lightColor", YQ::Vec3f(1.0f, 1.0f, 1.0f));
+	program->SetUniform("lightPos", lightPos);
 
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		//glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	std::function<void()> fun = [&]() {
+		float curTime = static_cast<float>(glfwGetTime());
+		deltaTime = curTime - lastFrame;
+		lastFrame = curTime;
+
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//绘制物体
 		program->Use();
-		program->SetUniform("objColor", YQ::Vec3f(1.0f, 0.5f, 0.31f));
-		program->SetUniform("lightColo", YQ::Vec3f(1.0f, 1.0f, 1.0f));
 		//传入模型矩阵
 		YQ::Matrix4f model = YQ::Matrix4f::CreateOnce();
 		program->SetUniform("model", model.Transposition());
@@ -169,7 +171,7 @@ void Test::Test_Light()
 		lightProgram->Use();
 		model = YQ::Matrix4f::CreateOnce();
 		YQ::Math::Translate(model, lightPos);
-		YQ::Math::Scale(model, YQ::Vec3f(0.2f, 0.2f, 0.2f));
+		YQ::Math::Scale(model, YQ::Vec3f(0.6f, 0.6f, 0.6f));
 
 		lightProgram->SetUniform("model", model.Transposition());
 
@@ -180,9 +182,9 @@ void Test::Test_Light()
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	};
 
-	wnd->SetPrint(fun);
 	wnd->SetMouseMove(mouseMove);
 	wnd->SetKeyEnter(ketFun);
+	wnd->SetPrint(fun);
 	app.Exec();
 
 	glDeleteVertexArrays(1, &VAO);

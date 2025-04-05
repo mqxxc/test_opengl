@@ -465,9 +465,9 @@
     <ClInclude Include="math\Math.hpp" />
     <ClInclude Include="math\Matrix.hpp" />
     <ClInclude Include="math\Vec.hpp" />
-    <ClInclude Include="Source\Math.ipp" />
+    <ClInclude Include="math\Vec2.hpp" />
+    <ClInclude Include="math\Vec3.hpp" />
     <ClInclude Include="Source\Tool.hpp" />
-    <ClInclude Include="Source\Vec.ipp" />
     <ClInclude Include="Test\Test_CoordinateSystem.h" />
     <ClInclude Include="Test\Test_Light.h" />
     <ClInclude Include="Test\Test_Texture.h" />
@@ -618,8 +618,6 @@
     <None Include="Header\glm\gtx\vector_angle.inl" />
     <None Include="Header\glm\gtx\vector_query.inl" />
     <None Include="Header\glm\gtx\wrap.inl" />
-    <ClInclude Include="Source\Matrix.ipp" />
-    <None Include="src\shader\Light_block.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
