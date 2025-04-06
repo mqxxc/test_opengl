@@ -21,12 +21,12 @@ void Test::Test_Light()
 	program->Complete();
 
 	GlProgram* lightProgram = new GlProgram;
-	lightProgram->CreateVertexShaderFromFile("src/shader/Light_block.vs");
+	lightProgram->CreateVertexShaderFromFile("src/shader/Light_block_light.vs");
 	lightProgram->CreateFragmentShaderFromFile("src/shader/Light_block_light.fs");
 	lightProgram->Complete();
 
 	float vertices[] = {
-	 -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+	-0.5f,-0.5f,  -0.5f,  0.0f,  0.0f, -1.0f,
 	 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 	 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -83,7 +83,7 @@ void Test::Test_Light()
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
 	//¹âÔ´ÊôÐÔ
@@ -143,6 +143,7 @@ void Test::Test_Light()
 	program->SetUniform("objColor", YQ::Vec3f(1.0f, 0.5f, 0.31f));
 	program->SetUniform("lightColor", YQ::Vec3f(1.0f, 1.0f, 1.0f));
 	program->SetUniform("lightPos", lightPos);
+	
 
 	std::function<void()> fun = [&]() {
 		float curTime = static_cast<float>(glfwGetTime());
@@ -164,6 +165,7 @@ void Test::Test_Light()
 			wnd->Width() / (float)wnd->Height(), 0.1f, 100.0f);
 		program->SetUniform("projection", projection.Transposition());
 
+		program->SetUniform("viewPos", camera.GetCurPos());
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 

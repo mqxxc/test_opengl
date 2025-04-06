@@ -14,6 +14,11 @@ float Camera::GetScale()
 	return m_zoom;
 }
 
+YQ::Vec3f Camera::GetCurPos()
+{
+	return m_cameraPos;
+}
+
 void Camera::OnMovePos(Camera_Movement direction, float deltaTime)
 {
 	float velocity = m_movementSpeed * deltaTime;

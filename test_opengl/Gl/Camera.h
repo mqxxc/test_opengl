@@ -18,6 +18,7 @@ public:
 
 	YQ::Matrix4f GetViweMatrix();
 	float GetScale();
+	YQ::Vec3f GetCurPos();
 	void OnMovePos(Camera_Movement direction, float deltaTime);
 	void OnMoveView(float xOffset, float yOffset, bool constraint = true);
 	void OnZoomView(float yoffset);
