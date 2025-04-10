@@ -149,7 +149,7 @@ bool GlProgram::Complete()
 
 void GlProgram::SetTextureUnit(TextureUnit* tex, const std::string& varName)
 {
-	glUniform1i(glGetUniformLocation(m_nProgramID, varName.c_str()), tex->m_nGlTextureNum - GL_TEXTURE0);	
+	glUniform1i(glGetUniformLocation(m_nProgramID, varName.c_str()), tex->TextureNum());	
 }
 
 void GlProgram::SetUniform(const std::string& name, bool value) const

@@ -159,9 +159,11 @@
     <ClCompile Include="Source\GlProgram.cpp" />
     <ClCompile Include="Source\GlWindow.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Source\Test_LightMapping.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\stb_image.cpp" />
     <ClCompile Include="Source\Test_CoordinateSystem.cpp" />
+    <ClCompile Include="Source\Test_Material.cpp" />
     <ClCompile Include="Source\Test_Triangle.cpp" />
     <ClCompile Include="Source\Test_wnd.cpp" />
     <ClCompile Include="Source\Test_Texture.cpp" />
@@ -468,8 +470,10 @@
     <ClInclude Include="math\Vec2.hpp" />
     <ClInclude Include="math\Vec3.hpp" />
     <ClInclude Include="Source\Tool.hpp" />
+    <ClInclude Include="Test\Test_LightMapping.h" />
     <ClInclude Include="Test\Test_CoordinateSystem.h" />
     <ClInclude Include="Test\Test_Light.h" />
+    <ClInclude Include="Test\Test_Material.h" />
     <ClInclude Include="Test\Test_Texture.h" />
     <ClInclude Include="Gl\TextureUnit.h" />
     <ClInclude Include="Test\Test_Camera.h" />

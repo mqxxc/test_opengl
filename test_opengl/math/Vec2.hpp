@@ -8,7 +8,9 @@ namespace YQ
 	public:
 		Vec2();
 		Vec2(const T& x, const T& y);
+		template<typename U = T, typename std::enable_if<!std::is_same<U, Vec2<T>>::value, bool>::type = false>
 		Vec2(const T& defValue);
+		Vec2(const Vec<T>& other);
 
 		T x();
 		T y();
@@ -18,6 +20,7 @@ namespace YQ
 	protected:
 		using Vec<T>::m_data;
 		using Vec<T>::m_nSize;
+		using Vec<T>::Copy;
 		void InitDefValue(const T& defValue);
 	};
 
@@ -35,10 +38,18 @@ namespace YQ
 	}
 
 	template<typename T>
+	template<typename U, typename std::enable_if<!std::is_same<U, Vec2<T>>::value, bool>::type>
 	inline Vec2<T>::Vec2(const T& defValue)
 		: Vec2()
 	{
 		InitDefValue(defValue);
+	}
+
+	template<typename T>
+	inline Vec2<T>::Vec2(const Vec<T>& other)
+		: Vec2<T>()
+	{
+		Copy(other);
 	}
 
 	template<typename T>

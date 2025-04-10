@@ -72,6 +72,12 @@
     <ClCompile Include="Source\Test_Light.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Test_Material.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Test_LightMapping.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Wnd\GlWindow.h">
@@ -996,6 +1002,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="math\Vec3.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\Test_Material.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\Test_LightMapping.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

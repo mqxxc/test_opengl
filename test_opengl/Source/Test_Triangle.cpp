@@ -15,8 +15,8 @@ void Test_Triangle()
 	wnd->MakeContextCurrent();
 
 	GlProgram* program = new GlProgram;
-	program->CreateVertexShaderFromFile("src/shader/Triangle.vs");
-	program->CreateFragmentShaderFromFile("src/shader/Triangle.fs");
+	program->CreateVertexShaderFromFile("resources/shader/Triangle.vs");
+	program->CreateFragmentShaderFromFile("resources/shader/Triangle.fs");
 	program->Complete();
 
 	float verArr[] = {

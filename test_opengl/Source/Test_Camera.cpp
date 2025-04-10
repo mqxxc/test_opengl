@@ -18,8 +18,8 @@ void Test::Test_Camera()
 	//wnd->SetInputMode(GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	GlProgram* program = new GlProgram;
-	program->CreateVertexShaderFromFile("src/shader/CoordinateSystem.vs");
-	program->CreateFragmentShaderFromFile("src/shader/CoordinateSystem.fs");
+	program->CreateVertexShaderFromFile("resources/shader/CoordinateSystem.vs");
+	program->CreateFragmentShaderFromFile("resources/shader/CoordinateSystem.fs");
 	program->Complete();
 
 	float vertices[] = {
@@ -87,7 +87,7 @@ void Test::Test_Camera()
 	texture1.SetColumnAround(TextureUnit::eREPEAT);
 	texture1.SetAmplifyStrategy(TextureUnit::eNEAREST);
 	texture1.SetShrinkStrategy(TextureUnit::eNEAREST);
-	texture1.LoadImg("src/img/container.jpg");
+	texture1.LoadImg("resources/img/container.jpg");
 	texture1.CreateGenerateMipmap();
 
 	TextureUnit texture2(GL_TEXTURE1);
@@ -95,7 +95,7 @@ void Test::Test_Camera()
 	texture2.SetColumnAround(TextureUnit::eREPEAT);
 	texture2.SetAmplifyStrategy(TextureUnit::eNEAREST);
 	texture2.SetShrinkStrategy(TextureUnit::eNEAREST);
-	texture2.LoadImg("src/img/awesomeface.png", true);
+	texture2.LoadImg("resources/img/awesomeface.png", true);
 	texture2.CreateGenerateMipmap();
 
 	program->Use();

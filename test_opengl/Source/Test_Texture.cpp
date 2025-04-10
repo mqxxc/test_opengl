@@ -16,8 +16,8 @@ void Test::Preliminary_Texture()
 	wnd->MakeContextCurrent();
 
 	GlProgram* program = new GlProgram;
-	program->CreateVertexShaderFromFile("src/shader/Preliminary_Texture.vs");
-	program->CreateFragmentShaderFromFile("src/shader/Preliminary_Texture.fs");
+	program->CreateVertexShaderFromFile("resources/shader/Preliminary_Texture.vs");
+	program->CreateFragmentShaderFromFile("resources/shader/Preliminary_Texture.fs");
 	program->Complete();
 
 	float vertices[] = {
@@ -62,7 +62,7 @@ void Test::Preliminary_Texture()
 	texture1.SetColumnAround(TextureUnit::eREPEAT);
 	texture1.SetAmplifyStrategy(TextureUnit::eNEAREST);
 	texture1.SetShrinkStrategy(TextureUnit::eNEAREST);
-	texture1.LoadImg("src/img/container.jpg");
+	texture1.LoadImg("resources/img/container.jpg");
 	texture1.CreateGenerateMipmap();
 
 	TextureUnit texture2(GL_TEXTURE1);
@@ -70,7 +70,7 @@ void Test::Preliminary_Texture()
 	texture2.SetColumnAround(TextureUnit::eREPEAT);
 	texture2.SetAmplifyStrategy(TextureUnit::eNEAREST);
 	texture2.SetShrinkStrategy(TextureUnit::eNEAREST);
-	texture2.LoadImg("src/img/awesomeface.png" , true);
+	texture2.LoadImg("resources/img/awesomeface.png" , true);
 	texture2.CreateGenerateMipmap();
 
 	glUseProgram(program->ProgramID());

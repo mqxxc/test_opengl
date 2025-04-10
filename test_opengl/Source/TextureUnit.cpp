@@ -22,7 +22,7 @@ bool TextureUnit::LoadImg(const std::string& imgPath, bool reverseY)
 	{
 		m_gTextureID = m_nTextureID;
 
-		glBindTexture(GL_TEXTURE_2D, m_gTextureID);
+		glBindTexture(GL_TEXTURE_2D, m_nTextureID);
 	}
 
 	int width, height, nrChannels;
@@ -30,7 +30,17 @@ bool TextureUnit::LoadImg(const std::string& imgPath, bool reverseY)
 	unsigned char* data = stbi_load(imgPath.c_str(), &width, &height, &nrChannels, 4);
 	if (data)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		GLenum format;
+		if (nrChannels == 1)
+			format = GL_RED;
+		else if (nrChannels == 3)
+			format = GL_RGB;
+		else if (nrChannels == 4)
+			format = GL_RGBA;
+		else
+			return false;
+
+		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 		stbi_image_free(data);
 		return true;
 	}
@@ -64,6 +74,18 @@ void TextureUnit::CreateGenerateMipmap()
 	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
+bool TextureUnit::Build()
+{
+	glActiveTexture(m_nGlTextureNum);
+	glBindTexture(GL_TEXTURE_2D, m_nTextureID);
+	return true;
+}
+
+uint TextureUnit::TextureNum()
+{
+	return m_nGlTextureNum - GL_TEXTURE0;
+}
+
 void TextureUnit::SetParameteri(uint type, uint around)
 {
 	if (m_gTextureID != m_nTextureID)
@@ -71,7 +93,7 @@ void TextureUnit::SetParameteri(uint type, uint around)
 		m_gTextureID = m_nTextureID;
 
 		glActiveTexture(m_nGlTextureNum);
-		glBindTexture(GL_TEXTURE_2D, m_gTextureID);
+		glBindTexture(GL_TEXTURE_2D, m_nTextureID);
 	}
 
 	glTexParameteri(GL_TEXTURE_2D, type, around);

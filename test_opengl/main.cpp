@@ -6,9 +6,11 @@
 #include "Test_CoordinateSystem.h"
 #include "Test_Camera.h"
 #include "Test_Light.h"
+#include "Test_Material.h"
+#include "Test_LightMapping.h"
 
 int main()
 {
-	Test::Test_Light();
+	Test::Test_LightMapping();
 	return 0;
 }

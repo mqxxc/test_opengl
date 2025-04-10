@@ -1,4 +1,4 @@
-#include "Test_Light.h"
+#include "Test_Material.h"
 #include "Application.h"
 #include "GlWindow.h"
 #include "GlProgram.h"
@@ -8,7 +8,7 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
-void Test::Test_Light()
+void Test::Test_Material()
 {
 	Application app;
 	GlWindow* wnd = new GlWindow("LearnOpenGL", 800, 600);
@@ -16,8 +16,8 @@ void Test::Test_Light()
 	wnd->SetInputMode(GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	GlProgram* program = new GlProgram;
-	program->CreateVertexShaderFromFile("resources/shader/Light_block.vs");
-	program->CreateFragmentShaderFromFile("resources/shader/Light_block.fs");
+	program->CreateVertexShaderFromFile("resources/shader/Material_block.vs");
+	program->CreateFragmentShaderFromFile("resources/shader/Material_block.fs");
 	program->Complete();
 
 	GlProgram* lightProgram = new GlProgram;
@@ -140,9 +140,17 @@ void Test::Test_Light()
 	YQ::Vec3f lightPos(1.2f, 1.0f, 2.0f);
 
 	program->Use();
-	program->SetUniform("objColor", YQ::Vec3f(1.0f, 0.5f, 0.31f));
 	program->SetUniform("lightColor", YQ::Vec3f(1.0f, 1.0f, 1.0f));
 	program->SetUniform("lightPos", lightPos);
+	program->SetUniform("material.ambient", YQ::Vec3f(1.0f, 0.5f, 0.31f));
+	program->SetUniform("material.diffuse", YQ::Vec3f(1.0f, 0.5f, 0.31f));
+	program->SetUniform("material.specular", YQ::Vec3f(0.5f, 0.5f, 0.5f));
+	program->SetUniform("material.shininess", static_cast<float>(32.0f));
+
+	program->SetUniform("light.ambient", YQ::Vec3f(0.2f, 0.2f, 0.2f));
+	program->SetUniform("light.diffuse", YQ::Vec3f(0.5f, 0.5f, 0.5f));
+	program->SetUniform("light.specular", YQ::Vec3f(1.0f, 1.0f, 1.0f));
+	program->SetUniform("light.position", lightPos);
 	
 
 	std::function<void()> fun = [&]() {

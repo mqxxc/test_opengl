@@ -24,17 +24,19 @@ public:
 	TextureUnit(uint nGlTexture);
 	~TextureUnit();
 
-	bool LoadImg(const std::string& imgPath, bool reverseY = false);
-	void SetRowAround(Around around);
-	void SetColumnAround(Around around);
-	void SetAmplifyStrategy(Zoom zoom);
-	void SetShrinkStrategy(Zoom zoom);
-	void CreateGenerateMipmap();
+	bool LoadImg(const std::string& imgPath, bool reverseY = false);	//加载图像到纹理单元
+	void SetRowAround(Around around);		//设置行边缘扩展
+	void SetColumnAround(Around around);	//设置列边缘扩展
+	void SetAmplifyStrategy(Zoom zoom);		//设置放大策略
+	void SetShrinkStrategy(Zoom zoom);		//设置缩小策略
+	void CreateGenerateMipmap();			//创建Mip映射表
+	bool Build();
+	uint TextureNum();
 
 protected:
-	uint m_nGlTextureNum;
-	uint m_nTextureID;
-	static uint m_gTextureID;
+	uint m_nGlTextureNum;		//gl纹理单元编号
+	uint m_nTextureID;			//纹理单元ID
+	static uint m_gTextureID;	//当前绑定的纹理单元
 
 	void SetParameteri(uint type, uint around);
 

@@ -12,7 +12,7 @@ namespace YQ
 	{
 	public:
 		Vec();
-		Vec(int nSize);
+		explicit Vec(int nSize);
 		template<typename... Args>
 		explicit Vec(Args&&... args);
 		Vec(const Vec& other);
@@ -29,6 +29,7 @@ namespace YQ
 		const T* const Data() const;
 		T& operator[](int nIndex);
 		T DotMultiplication(const Vec<T>& vec) const;
+		void Copy(const Vec<T>& other);
 		//Vec<T> CrossProduct(const Vec<T>& vec) const;
 
 		template<typename U = T, typename std::enable_if<!std::is_same<U, Vec<T>>::value, bool>::type = false>
@@ -78,10 +79,7 @@ namespace YQ
 	Vec<T>::Vec(const Vec& other)
 		: Vec(other.Size())
 	{
-		for (int i = 0; i < m_nSize; ++i)
-		{
-			m_data[i] = other.m_data[i];
-		}
+		Copy(other);
 	}
 
 	template<typename T>
@@ -211,6 +209,15 @@ namespace YQ
 		}
 
 		return res;
+	}
+
+	template<typename T>
+	inline void Vec<T>::Copy(const Vec<T>& other)
+	{
+		for (int i = 0; i < m_nSize; ++i)
+		{
+			m_data[i] = other.At(i);
+		}
 	}
 
 	/*template<typename T>
