@@ -163,6 +163,7 @@
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\stb_image.cpp" />
     <ClCompile Include="Source\Test_CoordinateSystem.cpp" />
+    <ClCompile Include="Source\Test_LightSources.cpp" />
     <ClCompile Include="Source\Test_Material.cpp" />
     <ClCompile Include="Source\Test_Triangle.cpp" />
     <ClCompile Include="Source\Test_wnd.cpp" />
@@ -473,6 +474,7 @@
     <ClInclude Include="Test\Test_LightMapping.h" />
     <ClInclude Include="Test\Test_CoordinateSystem.h" />
     <ClInclude Include="Test\Test_Light.h" />
+    <ClInclude Include="Test\Test_LightSources.h" />
     <ClInclude Include="Test\Test_Material.h" />
     <ClInclude Include="Test\Test_Texture.h" />
     <ClInclude Include="Gl\TextureUnit.h" />

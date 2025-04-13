@@ -8,9 +8,10 @@
 #include "Test_Light.h"
 #include "Test_Material.h"
 #include "Test_LightMapping.h"
+#include "Test_LightSources.h"
 
 int main()
 {
-	Test::Test_LightMapping();
+	Test::Test_LightSources();
 	return 0;
 }

@@ -19,6 +19,11 @@ YQ::Vec3f Camera::GetCurPos()
 	return m_cameraPos;
 }
 
+YQ::Vec3f Camera::GetFront()
+{
+	return m_cameraFront;
+}
+
 void Camera::OnMovePos(Camera_Movement direction, float deltaTime)
 {
 	float velocity = m_movementSpeed * deltaTime;

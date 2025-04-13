@@ -1,0 +1,6 @@
+#pragma once
+//∂‡π‚‘¥
+namespace Test
+{
+	void Test_LightSources();
+}

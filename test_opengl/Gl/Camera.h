@@ -16,9 +16,10 @@ public:
 	Camera() = default;
 	~Camera();
 
-	YQ::Matrix4f GetViweMatrix();
-	float GetScale();
-	YQ::Vec3f GetCurPos();
+	YQ::Matrix4f GetViweMatrix();		//获取观察矩阵
+	float GetScale();		//获取缩放值
+	YQ::Vec3f GetCurPos();	//获取摄像机位置
+	YQ::Vec3f GetFront();	//获取摄像机方向
 	void OnMovePos(Camera_Movement direction, float deltaTime);
 	void OnMoveView(float xOffset, float yOffset, bool constraint = true);
 	void OnZoomView(float yoffset);
