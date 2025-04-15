@@ -22,6 +22,7 @@ public:
 	};
 
 	TextureUnit(uint nGlTexture);
+	TextureUnit();
 	~TextureUnit();
 
 	bool LoadImg(const std::string& imgPath, bool reverseY = false);	//加载图像到纹理单元
@@ -30,7 +31,7 @@ public:
 	void SetAmplifyStrategy(Zoom zoom);		//设置放大策略
 	void SetShrinkStrategy(Zoom zoom);		//设置缩小策略
 	void CreateGenerateMipmap();			//创建Mip映射表
-	bool Build();
+	bool Build(uint nGlTexture = 0);
 	uint TextureNum();
 
 protected:

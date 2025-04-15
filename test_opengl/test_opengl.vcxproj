@@ -122,14 +122,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\sdk\glfw\include;..\sdk\glad\include;Gl;Wnd;Test;Header;math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\sdk\glfw\include;..\sdk\glad\include;..\sdk\Assimp_5.4.3\include;Gl;Wnd;Test;Header;math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\sdk\glfw\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\sdk\glfw\lib;..\sdk\Assimp_5.4.3\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3d.lib;assimp-vc143-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -152,6 +152,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Model.cpp" />
+    <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Header\glm\detail\glm.cpp" />
     <ClCompile Include="Source\Application.cpp" />
@@ -171,6 +173,7 @@
     <ClCompile Include="Source\TextureUnit.cpp" />
     <ClCompile Include="Source\Test_Camera.cpp" />
     <ClCompile Include="Source\Test_Light.cpp" />
+    <ClCompile Include="Source\Test_LoadModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gl\Camera.h" />
@@ -470,6 +473,8 @@
     <ClInclude Include="math\Vec.hpp" />
     <ClInclude Include="math\Vec2.hpp" />
     <ClInclude Include="math\Vec3.hpp" />
+    <ClInclude Include="Gl\Mesh.h" />
+    <ClInclude Include="Gl\Model.h" />
     <ClInclude Include="Source\Tool.hpp" />
     <ClInclude Include="Test\Test_LightMapping.h" />
     <ClInclude Include="Test\Test_CoordinateSystem.h" />
@@ -479,6 +484,7 @@
     <ClInclude Include="Test\Test_Texture.h" />
     <ClInclude Include="Gl\TextureUnit.h" />
     <ClInclude Include="Test\Test_Camera.h" />
+    <ClInclude Include="Test\Test_LoadModel.h" />
     <ClInclude Include="Wnd\GlWindow.h" />
     <ClInclude Include="Header\pch.h" />
     <ClInclude Include="Gl\Shader.h" />

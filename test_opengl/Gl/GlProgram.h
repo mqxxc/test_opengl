@@ -29,7 +29,7 @@ public:
 	void Use();
 	uint ProgramID();
 	bool Complete();
-	void SetTextureUnit(TextureUnit* tex, const std::string& varName);
+	void SetTextureUnit(TextureUnit* tex, const std::string& varName) const;
 
 	void SetUniform(const std::string& name, bool value) const;
 	void SetUniform(const std::string& name, int value) const;

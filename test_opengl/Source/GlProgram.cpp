@@ -147,7 +147,7 @@ bool GlProgram::Complete()
 	return true;
 }
 
-void GlProgram::SetTextureUnit(TextureUnit* tex, const std::string& varName)
+void GlProgram::SetTextureUnit(TextureUnit* tex, const std::string& varName) const
 {
 	glUniform1i(glGetUniformLocation(m_nProgramID, varName.c_str()), tex->TextureNum());	
 }

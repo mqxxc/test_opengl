@@ -11,6 +11,12 @@ TextureUnit::TextureUnit(uint nGlTexture)
 	glGenTextures(1, &m_nTextureID);
 }
 
+TextureUnit::TextureUnit()
+{
+	m_nGlTextureNum = 0;
+	glGenTextures(1, &m_nTextureID);
+}
+
 TextureUnit::~TextureUnit()
 {
 	glDeleteTextures(1, &m_nTextureID);
@@ -27,7 +33,7 @@ bool TextureUnit::LoadImg(const std::string& imgPath, bool reverseY)
 
 	int width, height, nrChannels;
 	stbi_set_flip_vertically_on_load(reverseY);
-	unsigned char* data = stbi_load(imgPath.c_str(), &width, &height, &nrChannels, 4);
+	unsigned char* data = stbi_load(imgPath.c_str(), &width, &height, &nrChannels, 0);
 	if (data)
 	{
 		GLenum format;
@@ -74,10 +80,21 @@ void TextureUnit::CreateGenerateMipmap()
 	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-bool TextureUnit::Build()
+bool TextureUnit::Build(uint nGlTexture)
 {
+	if (nGlTexture != 0)
+	{
+		m_nGlTextureNum = nGlTexture;
+	}
+	else
+	{
+		if (m_nGlTextureNum == 0)
+			return false;
+	}
+
 	glActiveTexture(m_nGlTextureNum);
 	glBindTexture(GL_TEXTURE_2D, m_nTextureID);
+	
 	return true;
 }
 

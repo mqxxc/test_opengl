@@ -1,6 +1,5 @@
 ﻿#pragma once
-#include "Matrix.hpp"
-#include "Vec3.hpp"
+#include "pch.h"
 
 #include <assert.h>
 #include <math.h>
@@ -8,9 +7,6 @@
 
 namespace YQ
 {
-	using Matrix4f = Matrix<float, 4, 4>;
-	using Matrix3f = Matrix<float, 3, 3>;
-	using Vec3f = Vec3<float>;
 	constexpr double M_PI = 3.14159265358979323846;
 	namespace Math
 	{

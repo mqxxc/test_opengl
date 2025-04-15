@@ -81,6 +81,15 @@
     <ClCompile Include="Source\Test_LightSources.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Model.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Test_LoadModel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Wnd\GlWindow.h">
@@ -1014,6 +1023,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Test\Test_LightSources.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Gl\Mesh.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Gl\Model.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\Test_LoadModel.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
