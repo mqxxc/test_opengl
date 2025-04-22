@@ -99,7 +99,6 @@ void Test::Test_LightSources()
 	//绑定顶点缓存
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	int op = sizeof(vertices);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);	//拷贝数据到顶点缓存中
 
 	//顶点数组对象

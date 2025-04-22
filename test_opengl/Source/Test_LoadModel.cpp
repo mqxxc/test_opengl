@@ -30,6 +30,61 @@ void Test::Test_LoadModel()
 	//开启深度测试
 	glEnable(GL_DEPTH_TEST);
 
+	float vertices[] = {
+		-0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f, -0.5f,
+		 0.5f,  0.5f, -0.5f, 
+		 0.5f,  0.5f, -0.5f,
+		-0.5f,  0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+
+		-0.5f, -0.5f,  0.5f,
+		 0.5f, -0.5f,  0.5f,
+		 0.5f,  0.5f,  0.5f,
+		 0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f,
+		-0.5f, -0.5f,  0.5f,
+
+		-0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f,
+
+		 0.5f,  0.5f,  0.5f,
+		 0.5f,  0.5f, -0.5f,
+		 0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f,  0.5f,
+		 0.5f,  0.5f,  0.5f,
+
+		-0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f,  0.5f,
+		 0.5f, -0.5f,  0.5f,
+		-0.5f, -0.5f,  0.5f,
+		-0.5f, -0.5f, -0.5f,
+
+		-0.5f,  0.5f, -0.5f,
+		 0.5f,  0.5f, -0.5f,
+		 0.5f,  0.5f,  0.5f,
+		 0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f, -0.5f,
+	};
+
+	uint VBO, VAO;
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
 	Camera camera;
 	float lastFrame = 0.0f;
 	float deltaTime = 0.0f;
@@ -74,59 +129,25 @@ void Test::Test_LoadModel()
 
 	YQ::Vec3f lightPos(1.2f, 1.0f, 2.0f);
 
-
+	YQ::Vec3f pointLightPosition(0.7f, 0.2f, 2.0f);
 	Model backpack("resources/model/backpack/backpack.obj");
 
-	//program->Use();
-	//program->SetUniform("lightColor", YQ::Vec3f(1.0f, 1.0f, 1.0f));
-	//program->SetUniform("material.shininess", static_cast<float>(64.0f));
+	program->Use();
+	program->SetUniform("shininess", static_cast<float>(64.0f));
 
-	//// directional light
-	//program->SetUniform("dirLight.direction", YQ::Vec3f(-0.2f, -1.0f, -0.3f));
-	//program->SetUniform("dirLight.ambient", YQ::Vec3f(0.05f, 0.05f, 0.05f));
-	//program->SetUniform("dirLight.diffuse", YQ::Vec3f(0.4f, 0.4f, 0.4f));
-	//program->SetUniform("dirLight.specular", YQ::Vec3f(0.5f, 0.5f, 0.5f));
-	//// point light 1
-	//program->SetUniform("pointLights[0].position", pointLightPositions[0]);
-	//program->SetUniform("pointLights[0].ambient", YQ::Vec3f(0.05f, 0.05f, 0.05f));
-	//program->SetUniform("pointLights[0].diffuse", YQ::Vec3f(0.8f, 0.8f, 0.8f));
-	//program->SetUniform("pointLights[0].specular", YQ::Vec3f(1.0f, 1.0f, 1.0f));
-	//program->SetUniform("pointLights[0].constant", 1.0f);
-	//program->SetUniform("pointLights[0].linear", 0.09f);
-	//program->SetUniform("pointLights[0].quadratic", 0.032f);
-	//// point light 2
-	//program->SetUniform("pointLights[1].position", pointLightPositions[1]);
-	//program->SetUniform("pointLights[1].ambient", YQ::Vec3f(0.05f, 0.05f, 0.05f));
-	//program->SetUniform("pointLights[1].diffuse", YQ::Vec3f(0.8f, 0.8f, 0.8f));
-	//program->SetUniform("pointLights[1].specular", YQ::Vec3f(1.0f, 1.0f, 1.0f));
-	//program->SetUniform("pointLights[1].constant", 1.0f);
-	//program->SetUniform("pointLights[1].linear", 0.09f);
-	//program->SetUniform("pointLights[1].quadratic", 0.032f);
-	//// point light 3
-	//program->SetUniform("pointLights[2].position", pointLightPositions[2]);
-	//program->SetUniform("pointLights[2].ambient", YQ::Vec3f(0.05f, 0.05f, 0.05f));
-	//program->SetUniform("pointLights[2].diffuse", YQ::Vec3f(0.8f, 0.8f, 0.8f));
-	//program->SetUniform("pointLights[2].specular", YQ::Vec3f(1.0f, 1.0f, 1.0f));
-	//program->SetUniform("pointLights[2].constant", 1.0f);
-	//program->SetUniform("pointLights[2].linear", 0.09f);
-	//program->SetUniform("pointLights[2].quadratic", 0.032f);
-	//// point light 4
-	//program->SetUniform("pointLights[3].position", pointLightPositions[3]);
-	//program->SetUniform("pointLights[3].ambient", YQ::Vec3f(0.05f, 0.05f, 0.05f));
-	//program->SetUniform("pointLights[3].diffuse", YQ::Vec3f(0.8f, 0.8f, 0.8f));
-	//program->SetUniform("pointLights[3].specular", YQ::Vec3f(1.0f, 1.0f, 1.0f));
-	//program->SetUniform("pointLights[3].constant", 1.0f);
-	//program->SetUniform("pointLights[3].linear", 0.09f);
-	//program->SetUniform("pointLights[3].quadratic", 0.032f);
-	//// spotLight
-	//program->SetUniform("spotLight.ambient", YQ::Vec3f(0.0f, 0.0f, 0.0f));
-	//program->SetUniform("spotLight.diffuse", YQ::Vec3f(1.0f, 1.0f, 1.0f));
-	//program->SetUniform("spotLight.specular", YQ::Vec3f(1.0f, 1.0f, 1.0f));
-	//program->SetUniform("spotLight.constant", 1.0f);
-	//program->SetUniform("spotLight.linear", 0.09f);
-	//program->SetUniform("spotLight.quadratic", 0.032f);
-	//program->SetUniform("spotLight.cutOff", cos(YQ::Math::DegreesToRadians(12.5f)));
-	//program->SetUniform("spotLight.outerCutOff", cos(YQ::Math::DegreesToRadians(15.0f)));
+	// directional light
+	program->SetUniform("dirLight.direction", YQ::Vec3f(-0.2f, -1.0f, -0.3f));
+	program->SetUniform("dirLight.ambient", YQ::Vec3f(0.05f, 0.05f, 0.05f));
+	program->SetUniform("dirLight.diffuse", YQ::Vec3f(0.4f, 0.4f, 0.4f));
+	program->SetUniform("dirLight.specular", YQ::Vec3f(0.5f, 0.5f, 0.5f));
+	// point light 
+	program->SetUniform("pointLight.position", pointLightPosition);
+	program->SetUniform("pointLight.ambient", YQ::Vec3f(0.05f, 0.05f, 0.05f));
+	program->SetUniform("pointLight.diffuse", YQ::Vec3f(0.8f, 0.8f, 0.8f));
+	program->SetUniform("pointLight.specular", YQ::Vec3f(1.0f, 1.0f, 1.0f));
+	program->SetUniform("pointLight.constant", 1.0f);
+	program->SetUniform("pointLight.linear", 0.09f);
+	program->SetUniform("pointLight.quadratic", 0.032f);
 
 	std::function<void()> fun = [&]() {
 		float curTime = static_cast<float>(glfwGetTime());
@@ -147,29 +168,21 @@ void Test::Test_LoadModel()
 		YQ::Matrix4f projection = YQ::Math::CreaPerspective(YQ::Math::DegreesToRadians(camera.GetScale()),
 			wnd->Width() / (float)wnd->Height(), 0.1f, 100.0f);
 		program->SetUniform("projection", projection.Transposition());
-
+		program->SetUniform("viewPos", camera.GetCurPos());
 		backpack.Draw(*program);
 
-		/*program->SetUniform("viewPos", camera.GetCurPos());
-
-		program->SetUniform("spotLight.position", camera.GetCurPos());
-		program->SetUniform("spotLight.direction", camera.GetFront());*/
-
 		//绘制灯光
-		/*lightProgram->Use();
+		lightProgram->Use();
 		lightProgram->SetUniform("view", view.Transposition());
 		lightProgram->SetUniform("projection", projection.Transposition());
-		glBindVertexArray(VAO_light);
+		glBindVertexArray(VAO);
 
-		for (int i = 0; i < 4; ++i)
-		{
-			YQ::Matrix4f model = YQ::Matrix4f::CreateOnce();
-			YQ::Math::Translate(model, pointLightPositions[i]);
-			YQ::Math::Scale(model, YQ::Vec3f(0.2f, 0.2f, 0.2f));
-			lightProgram->SetUniform("model", model.Transposition());
+		model = YQ::Matrix4f::CreateOnce();
+		YQ::Math::Translate(model, pointLightPosition);
+		YQ::Math::Scale(model, YQ::Vec3f(0.2f, 0.2f, 0.2f));
+		lightProgram->SetUniform("model", model.Transposition());
 
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-		}*/
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 	};
 
 	wnd->SetMouseMove(mouseMove);

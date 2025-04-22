@@ -36,12 +36,11 @@ void Mesh::Draw(const GlProgram& shader)
 		std::string textureName;
 		Texture::TextureType name = it.m_type;
 		if (name == Texture::TextureType::eDiffuse)
-		{
 			textureName = "texture_diffuse" + std::to_string(diffuseNr++);
-			shader.SetTextureUnit(it.m_texture, textureName);
-		}
-		/*else if (name == Texture::TextureType::eMirror)
-			textureName = "texture_specular" + std::to_string(specularNr++);*/
+		else if (name == Texture::TextureType::eMirror)
+			textureName = "texture_specular" + std::to_string(specularNr++);
+
+		shader.SetTextureUnit(it.m_texture, textureName);
 	}
 
 	glActiveTexture(GL_TEXTURE0);
