@@ -10,9 +10,10 @@
 #include "Test_LightMapping.h"
 #include "Test_LightSources.h"
 #include "Test_LoadModel.h"
+#include "Test_DeepTesting.h"
 
 int main()
 {
-	Test::Test_LoadModel();
+	Test::Test_DeepTesting();
 	return 0;
 }

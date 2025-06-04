@@ -86,10 +86,9 @@ bool TextureUnit::Build(uint nGlTexture)
 	{
 		m_nGlTextureNum = nGlTexture;
 	}
-	else
+	else if(m_nGlTextureNum == 0)
 	{
-		if (m_nGlTextureNum == 0)
-			return false;
+		return false;
 	}
 
 	glActiveTexture(m_nGlTextureNum);

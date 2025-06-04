@@ -31,8 +31,8 @@ public:
 	void SetAmplifyStrategy(Zoom zoom);		//设置放大策略
 	void SetShrinkStrategy(Zoom zoom);		//设置缩小策略
 	void CreateGenerateMipmap();			//创建Mip映射表
-	bool Build(uint nGlTexture = 0);
-	uint TextureNum();
+	bool Build(uint nGlTexture = 0);		//当没有传入默认纹理单元编号时需手动绑定对应纹理单元编号
+	uint TextureNum();						
 
 protected:
 	uint m_nGlTextureNum;		//gl纹理单元编号

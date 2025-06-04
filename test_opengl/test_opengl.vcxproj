@@ -161,6 +161,7 @@
     <ClCompile Include="Source\GlProgram.cpp" />
     <ClCompile Include="Source\GlWindow.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Source\Test_DeepTesting.cpp" />
     <ClCompile Include="Source\Test_LightMapping.cpp" />
     <ClCompile Include="Source\Shader.cpp" />
     <ClCompile Include="Source\stb_image.cpp" />
@@ -476,6 +477,7 @@
     <ClInclude Include="Gl\Mesh.h" />
     <ClInclude Include="Gl\Model.h" />
     <ClInclude Include="Source\Tool.hpp" />
+    <ClInclude Include="Test\Test_DeepTesting.h" />
     <ClInclude Include="Test\Test_LightMapping.h" />
     <ClInclude Include="Test\Test_CoordinateSystem.h" />
     <ClInclude Include="Test\Test_Light.h" />
