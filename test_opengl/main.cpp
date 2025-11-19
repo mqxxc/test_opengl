@@ -12,9 +12,10 @@
 #include "Test_LoadModel.h"
 #include "Test_DeepTesting.h"
 #include "Test_TemplateTesting.h"
+#include "Test/Test_Mix.h"
 
 int main()
 {
-	Test::Test_TemplateTesting();
+	Test::Test_Mix();
 	return 0;
 }

@@ -176,6 +176,7 @@
     <ClCompile Include="Source\Test_Light.cpp" />
     <ClCompile Include="Source\Test_LoadModel.cpp" />
     <ClCompile Include="Source\Test_TemplateTesting.cpp" />
+    <ClCompile Include="Source\Test_Mix.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gl\Camera.h" />
@@ -489,6 +490,7 @@
     <ClInclude Include="Test\Test_Camera.h" />
     <ClInclude Include="Test\Test_LoadModel.h" />
     <ClInclude Include="Test\Test_TemplateTesting.h" />
+    <ClInclude Include="Test\Test_Mix.h" />
     <ClInclude Include="Wnd\GlWindow.h" />
     <ClInclude Include="Header\pch.h" />
     <ClInclude Include="Gl\Shader.h" />

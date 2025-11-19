@@ -42,6 +42,12 @@ void Camera::OnMovePos(Camera_Movement direction, float deltaTime)
 	case Camera::Camera_Movement::eRIGHT:
 		m_cameraPos += m_rightSelf * velocity;
 		break;
+	case Camera::Camera_Movement::eTop:
+		m_cameraPos += YQ::Vec3f(0, 1, 0) * velocity;
+		break;
+	case Camera::Camera_Movement::eBottom:
+		m_cameraPos -= YQ::Vec3f(0, 1, 0) * velocity;
+		break;
 	case Camera::Camera_Movement::eNone:
 	default:
 		break;
@@ -83,7 +89,7 @@ void Camera::SetCameraPos(const YQ::Vec3f& pos)
 
 void Camera::UpdateSelfVec()
 {
-	YQ::Vec3f front;
+	YQ::Vec3f front;		//摄像机向前的向量
 	front.SetValue(0, cos(YQ::Math::DegreesToRadians(m_yaw))
 		* cos(YQ::Math::DegreesToRadians(m_pitch)));
 	front.SetValue(1, sin(YQ::Math::DegreesToRadians(m_pitch)));
@@ -92,7 +98,7 @@ void Camera::UpdateSelfVec()
 
 	m_cameraFront = front.Normalization();
 
-	m_rightSelf = YQ::Math::NormalVec(front, m_wordUpUnit);
+	m_rightSelf = YQ::Math::NormalVec(front, m_wordUpUnit);		//摄像机自身右向量
 
 	m_upSelf = YQ::Math::NormalVec(front, m_rightSelf);
 }

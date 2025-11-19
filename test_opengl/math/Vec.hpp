@@ -116,7 +116,7 @@ namespace YQ
 	{
 		if (m_data == nullptr || nIndex < 0 || nIndex >= m_nSize)
 		{
-			return T();
+			throw "data is null";
 		}
 
 		return m_data[nIndex];

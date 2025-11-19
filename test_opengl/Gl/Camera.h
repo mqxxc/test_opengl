@@ -10,7 +10,9 @@ public:
 		eFORWARD,
 		eBACKWARD,
 		eLEFT,
-		eRIGHT
+		eRIGHT,
+		eTop,
+		eBottom
 	};
 
 	Camera() = default;

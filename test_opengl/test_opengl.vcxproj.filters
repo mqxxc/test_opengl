@@ -96,6 +96,9 @@
     <ClCompile Include="Source\Test_TemplateTesting.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Test_Mix.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Wnd\GlWindow.h">
@@ -1044,6 +1047,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Test\Test_TemplateTesting.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\Test_Mix.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

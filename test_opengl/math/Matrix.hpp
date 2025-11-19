@@ -120,7 +120,7 @@ namespace YQ
 		{
 			return m_datas[row * m_nCols + col];
 		}
-		return T();
+		throw "data is null";
 	}
 
 	template<typename T, int nRow, int nCol>
