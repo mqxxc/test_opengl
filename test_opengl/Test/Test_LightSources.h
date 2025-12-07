@@ -1,6 +1,6 @@
 #pragma once
-//多光源
 namespace Test
 {
+	//多光源
 	void Test_LightSources();
 }

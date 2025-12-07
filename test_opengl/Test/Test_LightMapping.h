@@ -1,6 +1,6 @@
 #pragma once
-//¹âÕÕÌùÍ¼
 namespace Test
 {
+	//¹âÕÕÌùÍ¼
 	void Test_LightMapping();
 }

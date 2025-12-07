@@ -2,5 +2,6 @@
 
 namespace Test
 {
+	//»ìºÏÎÆÀí
 	void Preliminary_Texture();
 };
