@@ -99,6 +99,9 @@
     <ClCompile Include="Source\Test_Mix.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="math\YQMath.cpp">
+      <Filter>头文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Wnd\GlWindow.h">
@@ -1013,7 +1016,7 @@
     <ClInclude Include="math\Vec.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="math\Math.hpp">
+    <ClInclude Include="math\YQMath.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Test\Test_Light.h">
@@ -1466,6 +1469,16 @@
       <Filter>头文件</Filter>
     </None>
     <None Include="Header\glm\gtx\wrap.inl">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="math\Vec.inl" />
+    <None Include="math\Vec2.inl">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="math\Vec3.inl">
+      <Filter>头文件</Filter>
+    </None>
+    <None Include="math\Matrix.inl">
       <Filter>头文件</Filter>
     </None>
   </ItemGroup>

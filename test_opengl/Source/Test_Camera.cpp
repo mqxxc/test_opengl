@@ -4,7 +4,7 @@
 #include "GlWindow.h"
 #include "GlProgram.h"
 #include "TextureUnit.h"
-#include "Math.hpp"
+#include "YQMath.h"
 #include "Camera.h"
 
 #include "glad/glad.h"
@@ -153,13 +153,13 @@ void Test::Test_Camera()
 	float yaw = 0, pitch = 0;
 
 	std::function<void(double, double)> mouseMove = [&](double xpos, double ypos){
-		camera.OnMoveView(xpos - lastX, ypos - lastY);
-		lastX = xpos;
-		lastY = ypos;
+		camera.OnMoveView((float)xpos - lastX, (float)ypos - lastY);
+		lastX = (float)xpos;
+		lastY = (float)ypos;
 	};
 
 	std::function<void(double, double)> wheel = [&](double xpos, double ypos) {
-		camera.OnZoomView(ypos);
+		camera.OnZoomView((float)ypos);
 	};
 
 	YQ::Matrix4f model = YQ::Matrix4f::CreateOnce();

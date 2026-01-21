@@ -4,7 +4,7 @@
 #include "GlProgram.h"
 #include "TextureUnit.h"
 #include "Application.h"
-#include "Math.hpp"
+#include "YQMath.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"

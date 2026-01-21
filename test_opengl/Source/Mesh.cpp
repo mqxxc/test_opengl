@@ -45,7 +45,7 @@ void Mesh::Draw(const GlProgram& shader)
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(m_VAO);
-	glDrawElements(GL_TRIANGLES, m_indexs.size(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, (int)m_indexs.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 
 	//float 
@@ -91,7 +91,7 @@ void Mesh::SetupMesh()
 float* Mesh::CreateData_VBO(int& size)
 {
 	int unitSize = 8;
-	int nVertexSize = m_vertexs.size();
+	int nVertexSize = (int)m_vertexs.size();
 	size = nVertexSize * unitSize;
 	float* res = new float[size];
 

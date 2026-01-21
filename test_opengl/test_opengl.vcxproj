@@ -471,7 +471,7 @@
     <ClInclude Include="Header\glm\vec4.hpp" />
     <ClInclude Include="Header\glm\vector_relational.hpp" />
     <ClInclude Include="Header\stb_image.h" />
-    <ClInclude Include="math\Math.hpp" />
+    <ClInclude Include="math\YQMath.h" />
     <ClInclude Include="math\Matrix.hpp" />
     <ClInclude Include="math\Vec.hpp" />
     <ClInclude Include="math\Vec2.hpp" />
@@ -636,6 +636,11 @@
     <None Include="Header\glm\gtx\vector_angle.inl" />
     <None Include="Header\glm\gtx\vector_query.inl" />
     <None Include="Header\glm\gtx\wrap.inl" />
+    <ClCompile Include="math\YQMath.cpp" />
+    <None Include="math\Matrix.inl" />
+    <None Include="math\Vec.inl" />
+    <None Include="math\Vec2.inl" />
+    <None Include="math\Vec3.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

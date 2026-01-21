@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "GlWindow.h"
 #include "GlProgram.h"
-#include "Math.hpp"
+#include "YQMath.h"
 #include "Camera.h"
 #include "TextureUnit.h"
 
@@ -156,9 +156,9 @@ void Test::Test_LightSources()
 	float yaw = 0, pitch = 0;
 
 	std::function<void(double, double)> mouseMove = [&](double xpos, double ypos) {
-		camera.OnMoveView(xpos - lastX, ypos - lastY);
-		lastX = xpos;
-		lastY = ypos;
+		camera.OnMoveView((float)xpos - lastX, (float)ypos - lastY);
+		lastX = (float)xpos;
+		lastY = (float)ypos;
 	};
 
 	camera.SetCameraPos({ 1.7f ,1.5f ,5.0f });

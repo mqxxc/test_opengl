@@ -55,7 +55,7 @@ short Shader::LoadFromFile(const std::vector<std::string>& strPath)
         return -1;
     }
 
-    int nCount = strPath.size();
+    int nCount = (int)strPath.size();
     std::vector<std::string> datas(nCount, "");
     for (int i = 0; i < nCount; ++i)
     {
@@ -147,7 +147,7 @@ short Shader::LoadFromString(const std::vector<std::string>& strData)
         return -1;
     }
 
-    int nCount = strData.size();
+    int nCount = (int)strData.size();
     char const** buff = new const char* [nCount];
 
     for (int i = 0; i < nCount; ++i)

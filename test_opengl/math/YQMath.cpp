@@ -1,31 +1,11 @@
-ï»¿#pragma once
-#include "pch.h"
-
-#include <assert.h>
-#include <math.h>
-#include <cmath>
+#pragma once
+#include "YQMath.h"
 
 namespace YQ
 {
-	constexpr double M_PI = 3.14159265358979323846;
 	namespace Math
 	{
-		void Translate(Matrix4f& matrix, const Vec3f& vec);				//å¹³ç§»çŸ©é˜µ
-
-		Matrix4f Rotate(const Matrix4f& matrix, float angle, const Vec3f& vec);		//æ—‹è½¬çŸ©é˜µ
-
-		void Scale(Matrix4f& matrix, const Vec3f& vec);				//ç¼©æ”¾çŸ©é˜µ
-
-		Vec3f NormalVec(const Vec3f& vec1, const Vec3f& vec2);		//æ±‚æ³•å‘é‡
-
-		Matrix4f LookAt(const Vec3f& pos, const Vec3f& sight, const Vec3f& up);		//åˆ›å»ºè§†å›¾çŸ©é˜µ
-
-		YQ::Matrix4f CreaPerspective(float VerticalAngle,			//åˆ›å»ºé€è§†çŸ©é˜µ
-			float aspect, float near, float far);
-
-		float DegreesToRadians(float angle);		//è§’åº¦è½¬å¼§åº¦
-
-		inline YQ::Matrix4f YQ::Math::CreaPerspective(float VerticalAngle, float aspect, float near, float far)
+		YQ::Matrix4f YQ::Math::CreaPerspective(float VerticalAngle, float aspect, float near, float far)
 		{
 			assert(near > 0 && near < far);
 			Matrix4f temp(0);
@@ -38,16 +18,11 @@ namespace YQ
 			return temp;
 		}
 
-		inline float YQ::Math::DegreesToRadians(float angle)
-		{
-			return angle * ((float)M_PI / 180.0f);
-		}
-
-		inline void Translate(YQ::Matrix4f& matrix, const YQ::Vec3f& vec)
+		void Translate(YQ::Matrix4f& matrix, const YQ::Vec3f& vec)
 		{
 			assert(!matrix.IsEmpty() && !vec.IsEmpty());
 
-			//æž„å»ºå¹³ç§»çŸ©é˜µ
+			//¹¹½¨Æ½ÒÆ¾ØÕó
 			Matrix4f tempMatrix = Matrix4f::CreateOnce();
 			int nSize = vec.Size();
 			int col = matrix.Cols() - 1;
@@ -58,7 +33,7 @@ namespace YQ
 			matrix *= tempMatrix;
 		}
 
-		inline Matrix4f Rotate(const Matrix4f& matrix, float angle, const Vec3f& vec)
+		Matrix4f Rotate(const Matrix4f& matrix, float angle, const Vec3f& vec)
 		{
 			int nSize = vec.Size();
 			Vec3f unitVec(vec);
@@ -66,7 +41,7 @@ namespace YQ
 
 			Matrix3f once = Matrix3f::CreateOnce();
 			once *= float(cos(angle));
-			//å¤–ç§¯çŸ©é˜µ
+			//Íâ»ý¾ØÕó
 			Matrix3f outerProduct;
 			for (int row = 0; row < outerProduct.Rows(); ++row)
 			{
@@ -78,7 +53,7 @@ namespace YQ
 
 			outerProduct *= (1 - cos(angle));
 
-			//å‰ä¹˜çŸ©é˜µ
+			//²æ³Ë¾ØÕó
 			Matrix3f skewSymmetric(0.0f);
 			skewSymmetric.SetValue(0, 1, -unitVec.At(2));
 			skewSymmetric.SetValue(0, 2, unitVec.At(1));
@@ -91,14 +66,14 @@ namespace YQ
 			once += outerProduct;
 			once += skewSymmetric;
 
-			//æ‰©å±•
+			//À©Õ¹
 			Matrix4f RMatrix = Matrix4f::CreateOnce();
 			RMatrix.Copy(once);
 
 			return matrix * RMatrix;
 		}
 
-		inline void Scale(Matrix4f& matrix, const Vec3f& vec)
+		void Scale(Matrix4f& matrix, const Vec3f& vec)
 		{
 			Matrix4f temp = Matrix4f::CreateOnce();
 			for (int i = 0; i < vec.Size(); ++i)
@@ -108,7 +83,7 @@ namespace YQ
 			matrix *= temp;
 		}
 
-		inline Vec3f NormalVec(const Vec3f& vec1, const Vec3f& vec2)
+		Vec3f NormalVec(const Vec3f& vec1, const Vec3f& vec2)
 		{
 			Vec3f vec;
 			vec[0] = vec1.At(1) * vec2.At(2) - vec2.At(1) * vec1.At(2);
@@ -117,9 +92,9 @@ namespace YQ
 			return vec;
 		}
 
-		inline Matrix4f LookAt(const Vec3f& pos, const Vec3f& target, const Vec3f& up)
+		Matrix4f LookAt(const Vec3f& pos, const Vec3f& target, const Vec3f& up)
 		{
-			//æ–¹å‘å‘é‡
+			//·½ÏòÏòÁ¿
 
 			Vec3f sightVec = pos - target;
 			sightVec = sightVec.Normalization();
