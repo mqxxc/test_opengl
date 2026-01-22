@@ -5,6 +5,9 @@
 #include "GlProgram.h"
 #include "Camera.h"
 #include "YQMath.h"
+#include "../Gl/StaticVertexBuffer.h"
+#include "../Gl/VertexArray.h"
+#include "InteractionPro.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -84,73 +87,57 @@ void Test::Test_TemplateTesting()
 		 5.0f, -0.5f, -5.0f,  2.0f, 2.0f
 	};
 
-	uint groundVBO, groundVAO;
-	glGenVertexArrays(1, &groundVAO);
-	glGenBuffers(1, &groundVBO);
+	StaticVertexBuffer groundVBO;
+	groundVBO.CreateBuffer(5);
+	groundVBO.wirteData(planeVertices, sizeof(planeVertices) / sizeof(float));
 
-	glBindVertexArray(groundVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, groundVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(planeVertices), planeVertices, GL_STATIC_DRAW);
+	VertexArray groundVAO;
+	std::vector<VertexArray::VertexLayout> groundLayoutList;
+	groundLayoutList.resize(2);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
+	groundLayoutList[0].VBO = &groundVBO;
+	groundLayoutList[0].dataTypeEnum = GL_FLOAT;
+	groundLayoutList[0].offset = 0;
+	groundLayoutList[0].unitLength = sizeof(float);
+	groundLayoutList[0].attributeLength = 3;
 
-	uint cubeVBO, cubeVAO;
-	glGenVertexArrays(1, &cubeVAO);
-	glGenBuffers(1, &cubeVBO);
+	groundLayoutList[1].VBO = &groundVBO;
+	groundLayoutList[1].dataTypeEnum = GL_FLOAT;
+	groundLayoutList[1].offset = 3;
+	groundLayoutList[1].unitLength = sizeof(float);
+	groundLayoutList[1].attributeLength = 2;
 
-	glBindVertexArray(cubeVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), cubeVertices, GL_STATIC_DRAW);
+	groundVAO.setupVBO(groundLayoutList);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
+	StaticVertexBuffer cubeVBO;
+	cubeVBO.CreateBuffer(5);
+	cubeVBO.wirteData(cubeVertices, sizeof(cubeVertices) / sizeof(float));
+
+	VertexArray cubeVAO;
+	std::vector<VertexArray::VertexLayout> cubeLayoutList;
+	cubeLayoutList.resize(2);
+
+	cubeLayoutList[0].VBO = &cubeVBO;
+	cubeLayoutList[0].dataTypeEnum = GL_FLOAT;
+	cubeLayoutList[0].offset = 0;
+	cubeLayoutList[0].unitLength = sizeof(float);
+	cubeLayoutList[0].attributeLength = 3;
+
+	cubeLayoutList[1].VBO = &cubeVBO;
+	cubeLayoutList[1].dataTypeEnum = GL_FLOAT;
+	cubeLayoutList[1].offset = 3;
+	cubeLayoutList[1].unitLength = sizeof(float);
+	cubeLayoutList[1].attributeLength = 2;
+
+	cubeVAO.setupVBO(cubeLayoutList);
 
 	Camera camera;
-	float lastFrame = 0.0f;
-	float deltaTime = 0.0f;
-
-	std::function<void(int, int, int, int)> ketFun = [&](int key, int scancode, int action, int mods) {
-		float cameraSpeed = 2.5f * deltaTime;
-		Camera::Camera_Movement direction = Camera::Camera_Movement::eNone;
-		switch (key)
-		{
-		case GLFW_KEY_W:
-			direction = Camera::Camera_Movement::eFORWARD;
-			break;
-		case GLFW_KEY_S:
-			direction = Camera::Camera_Movement::eBACKWARD;
-			break;
-		case GLFW_KEY_A:
-			direction = Camera::Camera_Movement::eLEFT;
-			break;
-		case GLFW_KEY_D:
-			direction = Camera::Camera_Movement::eRIGHT;
-			break;
-		case GLFW_KEY_SPACE:
-			wnd->Close();
-			break;
-		default:
-			break;
-		}
-		camera.OnMovePos(direction, cameraSpeed);
-	};
-
-	float lastX = 400, lastY = 300;
-	float yaw = 0, pitch = 0;
-
-	std::function<void(double, double)> mouseMove = [&](double xpos, double ypos) {
-		camera.OnMoveView((float)xpos - lastX, (float)ypos - lastY);
-		lastX = (float)xpos;
-		lastY = (float)ypos;
-	};
-
 	camera.SetCameraPos({ 1.7f ,1.5f ,5.0f });
 	camera.OnMoveView(0.0f, 120.0f);
+
+	InteractionPro interactionPro;
+	interactionPro.m_pWnd = wnd;
+	interactionPro.m_Camera = &camera;
 
 	TextureUnit floor(GL_TEXTURE0);
 	floor.LoadImg("resources/img/floorTile.png", true);
@@ -169,9 +156,7 @@ void Test::Test_TemplateTesting()
 	cube.CreateGenerateMipmap();
 
 	std::function<void()> fun = [&]() {
-		float curTime = static_cast<float>(glfwGetTime());
-		deltaTime = curTime - lastFrame;
-		lastFrame = curTime;
+		interactionPro.updateDelta();
 
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -188,7 +173,7 @@ void Test::Test_TemplateTesting()
 
 		glStencilMask(0x00);
 		//绘制地板
-		glBindVertexArray(groundVAO);
+		groundVAO.bindVertexArray();
 		YQ::Matrix4f model = YQ::Matrix4f::CreateOnce();
 		program->SetUniform("model", model.Transposition());
 		floor.Build();
@@ -199,7 +184,7 @@ void Test::Test_TemplateTesting()
 		glStencilFunc(GL_ALWAYS, 1, 0xFF);
 		glStencilMask(0xFF);
 		//立方体
-		glBindVertexArray(cubeVAO);
+		cubeVAO.bindVertexArray();
 		cube.Build();
 		program->SetTextureUnit(&cube, "texture1");
 
@@ -221,8 +206,7 @@ void Test::Test_TemplateTesting()
 		edgeProgram->SetUniform("view", view.Transposition());
 		edgeProgram->SetUniform("projection", projection.Transposition());
 
-		
-		glBindVertexArray(cubeVAO);
+		cubeVAO.bindVertexArray();
 
 		model = YQ::Matrix4f::CreateOnce();
 		YQ::Math::Translate(model, YQ::Vec3f{ -1.0f, 0.0f, -1.0f });
@@ -240,8 +224,14 @@ void Test::Test_TemplateTesting()
 		glEnable(GL_DEPTH_TEST);
 	};
 
-	wnd->SetMouseMove(mouseMove);
-	wnd->SetKeyEnter(ketFun);
+	wnd->SetMouseMove([&interactionPro](double x, double y) {
+		interactionPro.mouseMoveEvent(x, y);
+	});
+
+	wnd->SetKeyEnter([&interactionPro](int key, int scancode, int action, int mods) {
+		interactionPro.keyKeyEnterEvent(key, scancode, action, mods);
+	});
+
 	wnd->SetPrint(fun);
 	app.Exec();
 

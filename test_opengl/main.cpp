@@ -16,6 +16,6 @@
 
 int main()
 {
-	Test::Test_Mix();
+	Test::Test_TemplateTesting();
 	return 0;
 }

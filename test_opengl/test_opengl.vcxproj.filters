@@ -102,6 +102,18 @@
     <ClCompile Include="math\YQMath.cpp">
       <Filter>头文件</Filter>
     </ClCompile>
+    <ClCompile Include="Header\InteractionPro.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Gl\VertexBuffer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Gl\StaticVertexBuffer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Gl\VertexArray.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Wnd\GlWindow.h">
@@ -1053,6 +1065,18 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Test\Test_Mix.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Header\InteractionPro.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Gl\VertexBuffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Gl\StaticVertexBuffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Gl\VertexArray.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

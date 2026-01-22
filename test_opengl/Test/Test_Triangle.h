@@ -1,4 +1,6 @@
 #pragma once
 
-void Test_Triangle();
-
+namespace Test
+{
+	void Test_Triangle();
+}
