@@ -7,7 +7,7 @@ public:
 	VertexBuffer();
 	virtual ~VertexBuffer();
 
-	virtual void CreateBuffer(GLsizei nGroupLength) = 0;
+	virtual void CreateVBO(GLsizei nGroupLength) = 0;
 	inline bool isEmpty() const;
 	inline GLsizeiptr dataLength() const;
 	inline GLsizei groupLength() const;

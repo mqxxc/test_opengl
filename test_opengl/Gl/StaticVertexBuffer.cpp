@@ -3,10 +3,10 @@
 StaticVertexBuffer::StaticVertexBuffer(GLsizei nSize)
 	: VertexBuffer()
 {
-	CreateBuffer(nSize);
+	CreateVBO(nSize);
 }
 
-void StaticVertexBuffer::CreateBuffer(GLsizei nGroupLength)
+void StaticVertexBuffer::CreateVBO(GLsizei nGroupLength)
 {
 	if (nGroupLength <= 0)
 	{

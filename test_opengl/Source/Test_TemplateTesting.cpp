@@ -88,7 +88,7 @@ void Test::Test_TemplateTesting()
 	};
 
 	StaticVertexBuffer groundVBO;
-	groundVBO.CreateBuffer(5);
+	groundVBO.CreateVBO(5);
 	groundVBO.wirteData(planeVertices, sizeof(planeVertices) / sizeof(float));
 
 	VertexArray groundVAO;
@@ -110,7 +110,7 @@ void Test::Test_TemplateTesting()
 	groundVAO.setupVBO(groundLayoutList);
 
 	StaticVertexBuffer cubeVBO;
-	cubeVBO.CreateBuffer(5);
+	cubeVBO.CreateVBO(5);
 	cubeVBO.wirteData(cubeVertices, sizeof(cubeVertices) / sizeof(float));
 
 	VertexArray cubeVAO;

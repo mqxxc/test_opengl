@@ -3,6 +3,8 @@
 #include "GlProgram.h"
 #include "TextureUnit.h"
 #include "Application.h"
+#include "../Gl/StaticVertexBuffer.h"
+#include "../Gl/VertexArray.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -28,27 +30,37 @@ void Test::Preliminary_Texture()
 			-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // 左上
 	};
 
-	//顶点输入
-	unsigned int VBO, VAO, EBO;
+	StaticVertexBuffer VBO;
+	VBO.CreateVBO(8);
+	VBO.wirteData(vertices, sizeof(vertices) / sizeof(float));
 
-	//绑定顶点缓存
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);	//拷贝数据到顶点缓存中
+	VertexArray VAO;
 
-	//顶点数组对象
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);//启用顶点属性
+	std::vector<VertexArray::VertexLayout> layoutList;
+	layoutList.resize(3);
+	layoutList[0].VBO = &VBO;
+	layoutList[0].dataTypeEnum = GL_FLOAT;
+	layoutList[0].offset = 0;
+	layoutList[0].unitLength = sizeof(float);
+	layoutList[0].attributeLength = 3;
 
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);//启用顶点属性
+	layoutList[1].VBO = &VBO;
+	layoutList[1].dataTypeEnum = GL_FLOAT;
+	layoutList[1].offset = 3;
+	layoutList[1].unitLength = sizeof(float);
+	layoutList[1].attributeLength = 3;
 
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);//启用顶点属性
+	layoutList[2].VBO = &VBO;
+	layoutList[2].dataTypeEnum = GL_FLOAT;
+	layoutList[2].offset = 6;
+	layoutList[2].unitLength = sizeof(float);
+	layoutList[2].attributeLength = 2;
 
+	VAO.setupVBO(layoutList);
+
+	VAO.bindVertexArray();
 	//索引对象
+	GLuint EBO;
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	int indices[] = {
@@ -73,23 +85,19 @@ void Test::Preliminary_Texture()
 	texture2.LoadImg("resources/img/awesomeface.png" , true);
 	texture2.CreateGenerateMipmap();
 
-	glUseProgram(program->ProgramID());
-
+	program->Use();
 	program->SetTextureUnit(&texture1, "Texture1");
 	program->SetTextureUnit(&texture2, "Texture2");
 
+	int posSize = sizeof(indices) / sizeof(float);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	std::function<void()> fun = [&]() {
 		glClear(GL_COLOR_BUFFER_BIT);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, posSize, GL_UNSIGNED_INT, 0);
 	};
 
 	wnd->SetPrint(fun);
 	app.Exec();
-
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
-	glDeleteBuffers(1, &EBO);
 
 	delete program;
 	delete wnd;

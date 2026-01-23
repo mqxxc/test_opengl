@@ -35,7 +35,7 @@ private:
 	float m_maxYaw = 89.0f;
 	float m_maxPitch = 89.0f;
 
-	float m_movementSpeed = 2.5f;		//移动速度
+	float m_movementSpeed = 0.1f;		//移动速度
 	float m_mouseSensitivity = 0.1f;	//鼠标灵敏度
 	float m_zoom = 45.0f;				//缩放系数
 

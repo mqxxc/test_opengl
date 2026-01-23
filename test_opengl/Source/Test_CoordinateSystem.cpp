@@ -5,6 +5,8 @@
 #include "TextureUnit.h"
 #include "Application.h"
 #include "YQMath.h"
+#include "StaticVertexBuffer.h"
+#include "VertexArray.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -66,21 +68,27 @@ void Test::CoordinateSystem()
 	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 
-	//顶点输入
-	unsigned int VBO, VAO;
+	StaticVertexBuffer VBO;
+	VBO.CreateVBO(5);
+	VBO.wirteData(vertices, sizeof(vertices) / sizeof(float));
 
-	//绑定顶点缓存
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);	//拷贝数据到顶点缓存中
+	std::vector<VertexArray::VertexLayout> layoutList;
+	layoutList.resize(2);
+	layoutList[0].VBO = &VBO;
+	layoutList[0].dataTypeEnum = GL_FLOAT;
+	layoutList[0].offset = 0;
+	layoutList[0].unitLength = sizeof(float);
+	layoutList[0].attributeLength = 3;
 
-	//顶点数组对象
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);//启用顶点属性
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);//启用顶点属性
+	layoutList[1].VBO = &VBO;
+	layoutList[1].dataTypeEnum = GL_FLOAT;
+	layoutList[1].offset = 3;
+	layoutList[1].unitLength = sizeof(float);
+	layoutList[1].attributeLength = 2;
+
+	VertexArray VAO;
+	VAO.setupVBO(layoutList);
+	VAO.bindVertexArray();
 
 	TextureUnit texture1(GL_TEXTURE0);
 	texture1.SetRowAround(TextureUnit::eREPEAT);
@@ -133,9 +141,6 @@ void Test::CoordinateSystem()
 
 	wnd->SetPrint(fun);
 	app.Exec();
-
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
 
 	delete program;
 	delete wnd;

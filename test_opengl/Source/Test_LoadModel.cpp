@@ -5,6 +5,9 @@
 #include "YQMath.h"
 #include "Camera.h"
 #include "Model.h"
+#include "StaticVertexBuffer.h"
+#include "VertexArray.h"
+#include "InteractionPro.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -74,58 +77,26 @@ void Test::Test_LoadModel()
 		-0.5f,  0.5f, -0.5f,
 	};
 
-	uint VBO, VAO;
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	StaticVertexBuffer VBO;
+	VBO.CreateVBO(3);
+	VBO.wirteData(vertices, sizeof(vertices) / sizeof(float));
 
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
+	std::vector<VertexArray::VertexLayout> layoutList;
+	layoutList.resize(1);
+	layoutList[0].VBO = &VBO;
+	layoutList[0].dataTypeEnum = GL_FLOAT;
+	layoutList[0].offset = 0;
+	layoutList[0].unitLength = sizeof(float);
+	layoutList[0].attributeLength = 3;
+	
+	VertexArray VAO;
+	VAO.setupVBO(layoutList);
 
 	Camera camera;
-	float lastFrame = 0.0f;
-	float deltaTime = 0.0f;
-
-	std::function<void(int, int, int, int)> ketFun = [&](int key, int scancode, int action, int mods) {
-		float cameraSpeed = 2.5f * deltaTime;
-		Camera::Camera_Movement direction = Camera::Camera_Movement::eNone;
-		switch (key)
-		{
-		case GLFW_KEY_W:
-			direction = Camera::Camera_Movement::eFORWARD;
-			break;
-		case GLFW_KEY_S:
-			direction = Camera::Camera_Movement::eBACKWARD;
-			break;
-		case GLFW_KEY_A:
-			direction = Camera::Camera_Movement::eLEFT;
-			break;
-		case GLFW_KEY_D:
-			direction = Camera::Camera_Movement::eRIGHT;
-			break;
-		case GLFW_KEY_SPACE:
-			wnd->Close();
-			break;
-		default:
-			break;
-		}
-		camera.OnMovePos(direction, cameraSpeed);
-	};
-
-	float lastX = 400, lastY = 300;
-	float yaw = 0, pitch = 0;
-
-	std::function<void(double, double)> mouseMove = [&](double xpos, double ypos) {
-		camera.OnMoveView((float)xpos - lastX, (float)ypos - lastY);
-		lastX = (float)xpos;
-		lastY = (float)ypos;
-	};
-
 	camera.SetCameraPos({ 1.7f ,1.5f ,5.0f });
 	camera.OnMoveView(0.0f, 120.0f);
+	InteractionPro interactionPro;
+
 
 	YQ::Vec3f lightPos(1.2f, 1.0f, 2.0f);
 
@@ -150,9 +121,7 @@ void Test::Test_LoadModel()
 	program->SetUniform("pointLight.quadratic", 0.032f);
 
 	std::function<void()> fun = [&]() {
-		float curTime = static_cast<float>(glfwGetTime());
-		deltaTime = curTime - lastFrame;
-		lastFrame = curTime;
+		interactionPro.updateDelta();
 
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -175,7 +144,7 @@ void Test::Test_LoadModel()
 		lightProgram->Use();
 		lightProgram->SetUniform("view", view.Transposition());
 		lightProgram->SetUniform("projection", projection.Transposition());
-		glBindVertexArray(VAO);
+		VAO.bindVertexArray();
 
 		model = YQ::Matrix4f::CreateOnce();
 		YQ::Math::Translate(model, pointLightPosition);
@@ -185,8 +154,13 @@ void Test::Test_LoadModel()
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	};
 
-	wnd->SetMouseMove(mouseMove);
-	wnd->SetKeyEnter(ketFun);
+	wnd->SetMouseMove([&](double xpos, double ypos) {
+		interactionPro.mouseMoveEvent(xpos, ypos);
+		});
+	wnd->SetKeyEnter([&](int key, int scancode, int action, int mods) {
+		interactionPro.keyKeyEnterEvent(key, scancode, action, mods);
+		});
+
 	wnd->SetPrint(fun);
 	app.Exec();
 

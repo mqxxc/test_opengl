@@ -7,7 +7,7 @@ public:
 	StaticVertexBuffer(GLsizei nSize = 0);
 	~StaticVertexBuffer() noexcept = default;
 
-	virtual void CreateBuffer(GLsizei nGroupLength) override;
+	virtual void CreateVBO(GLsizei nGroupLength) override;
 	bool wirteData(const float* dataPtr, size_t length);
 };
 

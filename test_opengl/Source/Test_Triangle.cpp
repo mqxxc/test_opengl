@@ -29,7 +29,7 @@ void Test::Test_Triangle()
 	};
 
 	StaticVertexBuffer triangleVBO;
-	triangleVBO.CreateBuffer(6);
+	triangleVBO.CreateVBO(6);
 	triangleVBO.wirteData(verArr, sizeof(verArr) / sizeof(float));
 
 	VertexArray triangleVAO;

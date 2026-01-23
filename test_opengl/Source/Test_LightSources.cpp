@@ -5,6 +5,9 @@
 #include "YQMath.h"
 #include "Camera.h"
 #include "TextureUnit.h"
+#include "StaticVertexBuffer.h"
+#include "VertexArray.h"
+#include "InteractionPro.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -93,76 +96,45 @@ void Test::Test_LightSources()
 		YQ::Vec3f(0.0f,  0.0f, -3.0f)
 	};
 
-	//顶点输入
-	unsigned int VBO, VAO, VAO_light;
+	StaticVertexBuffer VBO;
+	VBO.CreateVBO(8);
+	VBO.wirteData(vertices, sizeof(vertices) / sizeof(float));
 
-	//绑定顶点缓存
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);	//拷贝数据到顶点缓存中
+	VertexArray VAO;
+	std::vector<VertexArray::VertexLayout> layoutList;
+	layoutList.resize(3);
+	layoutList[0].VBO = &VBO;
+	layoutList[0].dataTypeEnum = GL_FLOAT;
+	layoutList[0].offset = 0;
+	layoutList[0].unitLength = sizeof(float);
+	layoutList[0].attributeLength = 3;
 
-	//顶点数组对象
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
+	layoutList[1].VBO = &VBO;
+	layoutList[1].dataTypeEnum = GL_FLOAT;
+	layoutList[1].offset = 3;
+	layoutList[1].unitLength = sizeof(float);
+	layoutList[1].attributeLength = 3;
 
-	//光源属性
-	glGenVertexArrays(1, &VAO_light);
-	glBindVertexArray(VAO_light);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
+	layoutList[2].VBO = &VBO;
+	layoutList[2].dataTypeEnum = GL_FLOAT;
+	layoutList[2].offset = 6;
+	layoutList[2].unitLength = sizeof(float);
+	layoutList[2].attributeLength = 2;
+	VAO.setupVBO(layoutList);
+
+	VertexArray VAO_light;
+	VAO_light.setupVBO(layoutList);
 
 	//开启深度测试
 	glEnable(GL_DEPTH_TEST);		
 
 	Camera camera;
-	float lastFrame = 0.0f;
-	float deltaTime = 0.0f;
-
-	std::function<void(int, int, int, int)> ketFun = [&](int key, int scancode, int action, int mods) {
-		float cameraSpeed = 2.5f * deltaTime;
-		Camera::Camera_Movement direction = Camera::Camera_Movement::eNone;
-		switch (key)
-		{
-		case GLFW_KEY_W:
-			direction = Camera::Camera_Movement::eFORWARD;
-			break;
-		case GLFW_KEY_S:
-			direction = Camera::Camera_Movement::eBACKWARD;
-			break;
-		case GLFW_KEY_A:
-			direction = Camera::Camera_Movement::eLEFT;
-			break;
-		case GLFW_KEY_D:
-			direction = Camera::Camera_Movement::eRIGHT;
-			break;
-		case GLFW_KEY_SPACE:
-			wnd->Close();
-			break;
-		default:
-			break;
-		}
-		camera.OnMovePos(direction, cameraSpeed);
-	};
-
-	float lastX = 400, lastY = 300;
-	float yaw = 0, pitch = 0;
-
-	std::function<void(double, double)> mouseMove = [&](double xpos, double ypos) {
-		camera.OnMoveView((float)xpos - lastX, (float)ypos - lastY);
-		lastX = (float)xpos;
-		lastY = (float)ypos;
-	};
-
 	camera.SetCameraPos({ 1.7f ,1.5f ,5.0f });
 	camera.OnMoveView(0.0f, 120.0f);
+
+	InteractionPro interactionPro;
+	interactionPro.m_pWnd = wnd;
+	interactionPro.m_Camera = &camera;
 
 	YQ::Vec3f lightPos(1.2f, 1.0f, 2.0f);
 
@@ -236,9 +208,7 @@ void Test::Test_LightSources()
 	program->SetUniform("spotLight.outerCutOff", cos(YQ::Math::DegreesToRadians(15.0f)));
 
 	std::function<void()> fun = [&]() {
-		float curTime = static_cast<float>(glfwGetTime());
-		deltaTime = curTime - lastFrame;
-		lastFrame = curTime;
+		interactionPro.updateDelta();
 
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -259,7 +229,7 @@ void Test::Test_LightSources()
 		program->SetUniform("spotLight.position", camera.GetCurPos());
 		program->SetUniform("spotLight.direction", camera.GetFront());
 
-		glBindVertexArray(VAO);
+		VAO.bindVertexArray();
 
 		for (int i = 0; i < 10; ++i)
 		{
@@ -274,7 +244,7 @@ void Test::Test_LightSources()
 		lightProgram->Use();
 		lightProgram->SetUniform("view", view.Transposition());
 		lightProgram->SetUniform("projection", projection.Transposition());
-		glBindVertexArray(VAO_light);
+		VAO_light.bindVertexArray();
 
 		for (int i = 0; i < 4; ++i)
 		{
@@ -287,15 +257,14 @@ void Test::Test_LightSources()
 		}
 	};
 
-	wnd->SetMouseMove(mouseMove);
-	wnd->SetKeyEnter(ketFun);
+	wnd->SetMouseMove([&](double xpos, double ypos) {
+		interactionPro.mouseMoveEvent(xpos, ypos);
+		});
+	wnd->SetKeyEnter([&](int key, int scancode, int action, int mods) {
+		interactionPro.keyKeyEnterEvent(key, scancode, action, mods);
+		});
 	wnd->SetPrint(fun);
 	app.Exec();
-
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
-
-	glDeleteVertexArrays(1, &VAO_light);
 	
 	delete program;
 	delete lightProgram;

@@ -16,6 +16,6 @@
 
 int main()
 {
-	Test::Test_TemplateTesting();
+	Test::CoordinateSystem();
 	return 0;
 }

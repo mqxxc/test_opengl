@@ -17,7 +17,7 @@ void InteractionPro::mouseMoveEvent(double xpos, double ypos)
 
 void InteractionPro::keyKeyEnterEvent(int key, int scancode, int action, int mods)
 {
-	float cameraSpeed = 2.5f * deltaTime;
+	float cameraSpeed = deltaTime;
 	Camera::Camera_Movement direction = Camera::Camera_Movement::eNone;
 	switch (key)
 	{
