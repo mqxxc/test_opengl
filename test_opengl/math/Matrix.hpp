@@ -4,6 +4,8 @@
 #endif // _DEBUG
 #include <assert.h>
 
+#include "LineRowView.hpp"
+
 namespace YQ
 {
 	template<typename T, int nRow, int nCol>
@@ -44,6 +46,7 @@ namespace YQ
 		Matrix<T, nRow, nCol>& operator+=(const Matrix<T, nRow, nCol>& other);
 		Matrix<T, nRow, nCol> operator-(const Matrix<T, nRow, nCol>& other) const;
 		Matrix<T, nRow, nCol>& operator-=(const Matrix<T, nRow, nCol>& other);
+		LineRowView<T> operator[](int row);
 
 #ifdef _DEBUG
 		void print();

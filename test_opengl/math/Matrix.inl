@@ -332,6 +332,13 @@ namespace YQ
 	}
 
 	template<typename T, int nRow, int nCol>
+	LineRowView<T> Matrix<T, nRow, nCol>::operator[](int row)
+	{
+		assert(row >= 0 || row < nRow);
+		return LineRowView<T>(m_datas + row * nCol, nCol);
+	}
+
+	template<typename T, int nRow, int nCol>
 	bool Matrix<T, nRow, nCol>::CheckIndex(int row, int col) const
 	{
 		return (row > -1 && row < m_nRows)

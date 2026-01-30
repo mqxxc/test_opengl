@@ -476,6 +476,7 @@
     <ClInclude Include="Header\glm\vector_relational.hpp" />
     <ClInclude Include="Header\stb_image.h" />
     <ClInclude Include="Header\InteractionPro.h" />
+    <ClInclude Include="math\LineRowView.hpp" />
     <ClInclude Include="math\YQMath.h" />
     <ClInclude Include="math\Matrix.hpp" />
     <ClInclude Include="math\Vec.hpp" />
@@ -645,6 +646,7 @@
     <None Include="Header\glm\gtx\vector_query.inl" />
     <None Include="Header\glm\gtx\wrap.inl" />
     <ClCompile Include="math\YQMath.cpp" />
+    <None Include="math\LineRowView.inl" />
     <None Include="math\Matrix.inl" />
     <None Include="math\Vec.inl" />
     <None Include="math\Vec2.inl" />

@@ -35,9 +35,7 @@ namespace YQ
 
 		Matrix4f Rotate(const Matrix4f& matrix, float angle, const Vec3f& vec)
 		{
-			int nSize = vec.Size();
-			Vec3f unitVec(vec);
-			unitVec = unitVec.Normalization();
+			Vec3f unitVec = vec.Normalization();
 
 			Matrix3f once = Matrix3f::CreateOnce();
 			once *= float(cos(angle));
