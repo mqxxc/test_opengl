@@ -13,9 +13,10 @@
 #include "Test_DeepTesting.h"
 #include "Test_TemplateTesting.h"
 #include "Test/Test_Mix.h"
+#include "Test/Test_FrameBuffer.h"
 
 int main()
 {
-	Test::CoordinateSystem();
+	Test::Text_FrameBuffer();
 	return 0;
 }

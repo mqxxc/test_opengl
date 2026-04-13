@@ -181,6 +181,7 @@
     <ClCompile Include="Gl\VertexBuffer.cpp" />
     <ClCompile Include="Gl\StaticVertexBuffer.cpp" />
     <ClCompile Include="Gl\VertexArray.cpp" />
+    <ClCompile Include="Source\Test_FrameBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gl\Camera.h" />
@@ -500,6 +501,7 @@
     <ClInclude Include="Test\Test_Mix.h" />
     <ClInclude Include="Gl\VertexBuffer.h" />
     <ClInclude Include="Gl\VertexArray.h" />
+    <ClInclude Include="Test\Test_FrameBuffer.h" />
     <ClInclude Include="Wnd\GlWindow.h" />
     <ClInclude Include="Header\pch.h" />
     <ClInclude Include="Gl\Shader.h" />
