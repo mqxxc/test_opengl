@@ -1,4 +1,3 @@
-#include "LineRowView.hpp"
 namespace YQ
 {
 	template<typename T>

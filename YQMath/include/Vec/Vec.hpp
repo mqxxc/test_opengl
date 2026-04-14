@@ -1,4 +1,6 @@
 #pragma once
+#include "../YQMath_global.h"
+
 #include <type_traits>
 
 #ifdef _DEBUG
@@ -8,7 +10,7 @@
 namespace YQ
 {
 	template<typename T>
-	class Vec 
+	class YQMath_EXPORT Vec
 	{
 	public:
 		Vec();
@@ -59,4 +61,4 @@ namespace YQ
 	};
 };
 
-#include "Vec.inl"
+#include "Internal/Vec.inl"

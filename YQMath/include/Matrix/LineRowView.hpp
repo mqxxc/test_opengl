@@ -1,9 +1,10 @@
 #pragma once
+#include "../YQMath_global.h"
 
 namespace YQ
 {
 	template<typename T>
-	class LineRowView
+	class YQMath_EXPORT LineRowView
 	{
 	public:
 		LineRowView(T* dataPtr = nullptr, int nLength = 0);
@@ -18,4 +19,4 @@ namespace YQ
 	};
 }
 
-#include "LineRowView.inl"
+#include "Internal/LineRowView.inl"

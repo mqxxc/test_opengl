@@ -1,10 +1,12 @@
 #pragma once
+#include "../YQMath_global.h"
+
 #include "Vec2.hpp"
 
 namespace YQ
 {
 	template<typename T>
-	class Vec3 : public Vec2<T>
+	class YQMath_EXPORT Vec3 : public Vec2<T>
 	{
 	public:
 		using Vec<T>::Copy;
@@ -30,4 +32,4 @@ namespace YQ
 	};
 }
 
-#include "Vec3.inl"
+#include "Internal/Vec3.inl"

@@ -1,15 +1,16 @@
 #pragma once
+#include "../YQMath_global.h"
+
 #ifdef _DEBUG
 #include <iostream>
 #endif // _DEBUG
-#include <assert.h>
 
 #include "LineRowView.hpp"
 
 namespace YQ
 {
 	template<typename T, int nRow, int nCol>
-	class Matrix
+	class YQMath_EXPORT Matrix
 	{
 	public:
 		Matrix();
@@ -60,4 +61,4 @@ namespace YQ
 	};
 }
 
-#include "Matrix.inl"
+#include "Internal/Matrix.inl"

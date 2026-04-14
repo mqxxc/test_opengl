@@ -1,5 +1,5 @@
 #pragma once
-#include "YQMath.h"
+#include "../include/YQMath.h"
 
 namespace YQ
 {

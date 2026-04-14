@@ -1,9 +1,12 @@
 #pragma once
+#include "../YQMath_global.h"
+
 #include "Vec.hpp"
+
 namespace YQ
 {
 	template<typename T>
-	class Vec2 : public Vec<T>
+	class YQMath_EXPORT Vec2 : public Vec<T>
 	{
 	public:
 		using Vec<T>::Copy;
@@ -26,4 +29,4 @@ namespace YQ
 	};
 }
 
-#include "Vec2.inl"
+#include "Internal/Vec2.inl"
