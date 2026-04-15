@@ -15,15 +15,57 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="YQOpenGL_global.h">
+    <ClInclude Include="include\YQOpenGL_global.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
+    <ClInclude Include="include\Components\Camera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Components\ComponentBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Camera_Movement.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OpenGL\TextureUnit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OpenGL\TextureType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OpenGL\VertexArray.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OpenGL\VertexBuffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OpenGL\StaticVertexBuffer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OpenGL\Shader.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp">
+    <ClCompile Include="src\Components\Camera.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\ComponentBase.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenGL\TextureUnit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenGL\VertexArray.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenGL\VertexBuffer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenGL\StaticVertexBuffer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenGL\Shader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

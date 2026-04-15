@@ -7,8 +7,6 @@
 #include "../include/Matrix/Matrix.hpp"
 #include "../include/Vec/Vec3.hpp"
 
-typedef unsigned int uint;
-
 namespace YQ
 {
 	using Vec3f = Vec3<float>;

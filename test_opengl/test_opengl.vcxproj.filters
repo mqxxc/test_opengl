@@ -36,9 +36,6 @@
     <ClCompile Include="Test\Test_Triangle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Gl\Shader.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Wnd\GlWindow.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -51,9 +48,6 @@
     <ClCompile Include="Test\Test_Texture.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Gl\TextureUnit.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="other\Application.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -64,9 +58,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Test\Test_Camera.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Gl\Camera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Test\Test_Light.cpp">
@@ -102,15 +93,6 @@
     <ClCompile Include="other\InteractionPro.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Gl\VertexBuffer.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Gl\StaticVertexBuffer.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Gl\VertexArray.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Test\Test_FrameBuffer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -118,9 +100,6 @@
   <ItemGroup>
     <ClInclude Include="Wnd\GlWindow.h">
       <Filter>Wnd</Filter>
-    </ClInclude>
-    <ClInclude Include="Gl\Shader.h">
-      <Filter>Gl</Filter>
     </ClInclude>
     <ClInclude Include="Gl\GlProgram.h">
       <Filter>Gl</Filter>
@@ -138,9 +117,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Test\Test_Texture.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Gl\TextureUnit.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="other\Application.h">
@@ -1016,9 +992,6 @@
     <ClInclude Include="Test\Test_Camera.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Gl\Camera.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="other\Tool.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -1053,15 +1026,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="other\InteractionPro.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Gl\VertexBuffer.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Gl\StaticVertexBuffer.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Gl\VertexArray.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Test\Test_FrameBuffer.h">

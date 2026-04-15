@@ -124,11 +124,15 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)YQMath\include;$(SolutionDir)sdk\glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>YQMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -141,6 +145,8 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(SolutionDir)YQMath\include;$(SolutionDir)sdk\glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,14 +154,30 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>YQMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="YQOpenGL_global.h" />
+    <ClInclude Include="include\Camera_Movement.h" />
+    <ClInclude Include="include\Components\ComponentBase.h" />
+    <ClInclude Include="include\Components\Camera.h" />
+    <ClInclude Include="include\OpenGL\StaticVertexBuffer.h" />
+    <ClInclude Include="include\OpenGL\TextureType.h" />
+    <ClInclude Include="include\OpenGL\TextureUnit.h" />
+    <ClInclude Include="include\OpenGL\VertexArray.h" />
+    <ClInclude Include="include\OpenGL\VertexBuffer.h" />
+    <ClInclude Include="include\YQOpenGL_global.h" />
+    <ClInclude Include="include\OpenGL\Shader.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="src\OpenGL\Shader.cpp" />
+    <ClCompile Include="src\OpenGL\StaticVertexBuffer.cpp" />
+    <ClCompile Include="src\OpenGL\VertexArray.cpp" />
+    <ClCompile Include="src\OpenGL\VertexBuffer.cpp" />
+    <ClCompile Include="src\OpenGL\TextureUnit.cpp" />
+    <ClCompile Include="src\Components\ComponentBase.cpp" />
+    <ClCompile Include="src\Components\Camera.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
