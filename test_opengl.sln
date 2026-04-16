@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.35229.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_opengl", "test_opengl\test_opengl.vcxproj", "{2267ED5B-6AFA-4BFF-9F36-C52B9E6BC2A9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_opengl", "src\test_opengl\test_opengl.vcxproj", "{2267ED5B-6AFA-4BFF-9F36-C52B9E6BC2A9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YQOpenGL", "YQOpenGL\YQOpenGL.vcxproj", "{72E77491-7DD9-4AED-B574-D79ED2DA6282}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YQOpenGL", "src\YQOpenGL\YQOpenGL.vcxproj", "{72E77491-7DD9-4AED-B574-D79ED2DA6282}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YQMath", "YQMath\YQMath.vcxproj", "{1B0683FD-EE17-4D5D-A38C-2543B90C08A6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YQMath", "src\YQMath\YQMath.vcxproj", "{1B0683FD-EE17-4D5D-A38C-2543B90C08A6}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Glad", "src\Glad\Glad.vcxproj", "{FCA667C9-4569-49C0-AF00-79B6EB7BEA9A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,14 @@ Global
 		{1B0683FD-EE17-4D5D-A38C-2543B90C08A6}.Release|x64.Build.0 = Release|x64
 		{1B0683FD-EE17-4D5D-A38C-2543B90C08A6}.Release|x86.ActiveCfg = Release|Win32
 		{1B0683FD-EE17-4D5D-A38C-2543B90C08A6}.Release|x86.Build.0 = Release|Win32
+		{FCA667C9-4569-49C0-AF00-79B6EB7BEA9A}.Debug|x64.ActiveCfg = Debug|x64
+		{FCA667C9-4569-49C0-AF00-79B6EB7BEA9A}.Debug|x64.Build.0 = Debug|x64
+		{FCA667C9-4569-49C0-AF00-79B6EB7BEA9A}.Debug|x86.ActiveCfg = Debug|Win32
+		{FCA667C9-4569-49C0-AF00-79B6EB7BEA9A}.Debug|x86.Build.0 = Debug|Win32
+		{FCA667C9-4569-49C0-AF00-79B6EB7BEA9A}.Release|x64.ActiveCfg = Release|x64
+		{FCA667C9-4569-49C0-AF00-79B6EB7BEA9A}.Release|x64.Build.0 = Release|x64
+		{FCA667C9-4569-49C0-AF00-79B6EB7BEA9A}.Release|x86.ActiveCfg = Release|Win32
+		{FCA667C9-4569-49C0-AF00-79B6EB7BEA9A}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
